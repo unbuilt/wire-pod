@@ -126,6 +126,22 @@ func getRobot(serial string) (Robot, int, error) {
 	return newRobot(serial)
 }
 
+func GetRobot(serial string) (Robot, int, error) {
+	// look in robot list
+	for {
+		if !inhibitCreation {
+			break
+		}
+		time.Sleep(time.Second / 2)
+	}
+	for index, robot := range robots {
+		if strings.EqualFold(serial, robot.ESN) {
+			return robot, index, nil
+		}
+	}
+	return newRobot(serial)
+}
+
 // if connection is inactive for more than 5 minutes, remove robot
 // run this as a goroutine
 func connTimer(ind int) {
