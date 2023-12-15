@@ -93,7 +93,7 @@
 	},
 		{	
 		"name": "intent_imperative_affirmative",
-		"keyphrases" : ["是", "当然", "正确", "对" ]
+		"keyphrases" : ["当然", "正确", "对" ]
 	},
 	{	
 		"name": "intent_imperative_negative", 

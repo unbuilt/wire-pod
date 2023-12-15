@@ -50,6 +50,25 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 			}
 			req.Stream.Send(response)
 			return nil, nil
+		} else {
+			logger.Println("No IntentGraph")
+			if transcribedText != "" {
+				logger.Println("Sparking...")
+
+				// Get Spark response
+				apiResponse := sparkRequest(transcribedText)
+				logger.Println("Spark response: " + apiResponse)
+
+				audioData := xftts(apiResponse)
+				if audioData == nil {
+					logger.Println("xftts error")
+					return nil, nil
+				}
+
+				logger.Println("playing")
+				play_sound_data(audioData, req.Device)
+				logger.Println("plaed")
+			}
 		}
 		ttr.IntentPass(req, "intent_system_noaudio", transcribedText, map[string]string{"": ""}, false)
 		return nil, nil
