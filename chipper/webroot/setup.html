@@ -61,6 +61,7 @@
               <option value="openai">OpenAI</option>
               <option value="houndify">Houndify</option>
               <option value="together">Together</option>
+              <option value="spark">Spark</option>
             </select><br>
             <span id="houndifyInput" style="display:none">
               <small>To use Houndify, create an account at <a href=https://www.houndify.com/signup>houndify.com</a>, create a free domain, and enter the Client ID and Key here.</small><br>
@@ -90,6 +91,15 @@
                 <input type="text" name="openAIRobotName" id="openAIRobotName" placeholder="Anki Vector">
               </span>
             </span>
+            <span id="sparkInput" style="display:none">
+              <small>Use Spark LLM</small><br>            
+              <label for="appId">appId:</label>
+              <input type="text" name="appId" id="appId"><br>
+              <label for="appSecret">appSecret:</label>
+              <input type="text" name="appSecret" id="appSecret"><br>
+              <label for="appKey">appKey:</label>
+              <input type="text" name="appKey" id="appKey"><br>
+            </span>               
           </form>
 	  <div class="center">
             <button onclick="sendKGAPIKey()">Save</button>

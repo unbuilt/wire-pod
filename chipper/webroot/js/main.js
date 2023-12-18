@@ -592,7 +592,12 @@ function checkKG() {
         document.getElementById("togetherInput").style.display = "block";
         document.getElementById("openAIInput").style.display = "none";
         document.getElementById("houndifyInput").style.display = "none";
-    }
+    } else if (document.getElementById("kgProvider").value=="spark") {
+      document.getElementById("sparkInput").style.display = "block";
+      document.getElementById("openAIInput").style.display = "none";
+      document.getElementById("togetherInput").style.display = "none";
+      document.getElementById("houndifyInput").style.display = "none";
+  }
 }
 
 function sendKGAPIKey() {
@@ -621,6 +626,11 @@ function sendKGAPIKey() {
         model = ""
         id = document.getElementById("houndID").value
         intentgraph = "false"
+    } else if (provider == "spark") {
+        key = document.getElementById("appKey").value
+        model = document.getElementById("appSecret").value
+        id = document.getElementById("appId").value
+        intentgraph = "false"        
     } else {
         key = ""
         id = ""
