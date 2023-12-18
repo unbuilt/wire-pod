@@ -38,21 +38,20 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 	}
 	if !successMatched {
 		logger.Println("No intent was matched.")
-		if vars.APIConfig.Knowledge.Enable && vars.APIConfig.Knowledge.Provider == "openai" && len([]rune(transcribedText)) >= 8 {
-			apiResponse := openaiRequest(transcribedText)
-			response := &pb.IntentGraphResponse{
-				Session:      req.Session,
-				DeviceId:     req.Device,
-				ResponseType: pb.IntentGraphMode_KNOWLEDGE_GRAPH,
-				SpokenText:   apiResponse,
-				QueryText:    transcribedText,
-				IsFinal:      true,
-			}
-			req.Stream.Send(response)
-			return nil, nil
-		} else {
-			logger.Println("No IntentGraph")
-			if transcribedText != "" {
+		if vars.APIConfig.Knowledge.Enable && len([]rune(transcribedText)) >= 8 {
+			if vars.APIConfig.Knowledge.Provider == "openai" {
+				apiResponse := openaiRequest(transcribedText)
+				response := &pb.IntentGraphResponse{
+					Session:      req.Session,
+					DeviceId:     req.Device,
+					ResponseType: pb.IntentGraphMode_KNOWLEDGE_GRAPH,
+					SpokenText:   apiResponse,
+					QueryText:    transcribedText,
+					IsFinal:      true,
+				}
+				req.Stream.Send(response)
+				return nil, nil
+			} if vars.APIConfig.Knowledge.Provider == "spark" {
 				logger.Println("Sparking...")
 
 				// Get Spark response
@@ -68,6 +67,7 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 				logger.Println("playing")
 				play_sound_data(audioData, req.Device)
 				logger.Println("plaed")
+				return nil, nil
 			}
 		}
 		ttr.IntentPass(req, "intent_system_noaudio", transcribedText, map[string]string{"": ""}, false)

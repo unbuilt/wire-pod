@@ -5,7 +5,7 @@ go 1.18
 require (
 	fyne.io/fyne/v2 v2.4.2
 	github.com/Picovoice/leopard/binding/go v1.2.0
-	github.com/alphacep/vosk-api/go v0.3.45
+	github.com/alphacep/vosk-api/go v0.3.46
 	github.com/asticode/go-asticoqui v0.2.0
 	github.com/bramvdbogaerde/go-scp v1.2.1
 	github.com/digital-dream-labs/api v0.0.0-20210824232136-8cc90c1bb12c

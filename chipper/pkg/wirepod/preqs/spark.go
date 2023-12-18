@@ -12,6 +12,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/kercre123/wire-pod/chipper/pkg/vars"
 	"github.com/kercre123/wire-pod/chipper/pkg/logger"
 	"github.com/gorilla/websocket"
 )
@@ -30,7 +31,7 @@ func sparkRequest(transcribedText string) string {
 		HandshakeTimeout: 5 * time.Second,
 	}
 	//握手并建立websocket 连接
-	conn, resp, err := d.Dial(assembleAuthUrl1(hostUrl, apiKey, apiSecret), nil)
+	conn, resp, err := d.Dial(assembleAuthUrl1(hostUrl, vars.APIConfig.Knowledge.Key, vars.APIConfig.Knowledge.Model), nil)
 	if err != nil {
 		panic(readResp(resp) + err.Error())
 		return ""
@@ -40,7 +41,7 @@ func sparkRequest(transcribedText string) string {
 
 	go func() {
 
-		data := genParams1(appid, transcribedText)
+		data := genParams1(vars.APIConfig.Knowledge.Id, transcribedText)
 		conn.WriteJSON(data)
 
 	}()
@@ -277,7 +278,6 @@ func xftts(text string) []byte {
             audio := result["data"].(map[string]interface{})["audio"].(string)
             audioData, _ := base64.StdEncoding.DecodeString(audio)
 			alldata = append(alldata, audioData...)
-            ioutil.WriteFile("./demo.pcm", audioData, 0644)
             status := result["data"].(map[string]interface{})["status"].(float64)
             if status == 2 {
                 fmt.Println("ws is closed")

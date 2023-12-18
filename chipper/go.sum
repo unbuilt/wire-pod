@@ -69,6 +69,8 @@ github.com/alphacep/vosk-api v0.3.45 h1:L8JCM0JIe+HHDex3m4KoenjnV0D4HQXEv4PHk+jJ
 github.com/alphacep/vosk-api v0.3.45/go.mod h1:4yMGdq4okfhEWX9OpfIhWQmXoniWQ69xWPbfJFK+nDY=
 github.com/alphacep/vosk-api/go v0.3.45 h1:kVRykekkz/32tLzIIxbCckLoetDOXyHW5bIois4Ww8k=
 github.com/alphacep/vosk-api/go v0.3.45/go.mod h1:9X8IJsHnFk/b1xyvjlZifo+ZL5VTAx3LW+JQce/eRcA=
+github.com/alphacep/vosk-api/go v0.3.46 h1:obkgIAUh6tBcxt2OyrV18fWTUMEHW9zv//L+8zZKRnI=
+github.com/alphacep/vosk-api/go v0.3.46/go.mod h1:9X8IJsHnFk/b1xyvjlZifo+ZL5VTAx3LW+JQce/eRcA=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0/go.mod h1:t2tdKJDJF9BV14lnkjHmOQgcvEKgtqs5a1N3LNdJhGE=
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=
