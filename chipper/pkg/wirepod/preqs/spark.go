@@ -46,7 +46,7 @@ func sparkRequest(transcribedText string) string {
 
 	go func() {
 
-		data := genParams1(vars.APIConfig.Knowledge.Id, transcribedText)
+		data := genParams1(vars.APIConfig.Knowledge.ID, transcribedText)
 		conn.WriteJSON(data)
 
 	}()
@@ -245,7 +245,7 @@ func (wp *WsParam) createURL() string {
 }
 
 func xftts(text string) []byte {
-    wsParam := NewWsParam(appid, apiKey, apiSecret, text)
+    wsParam := NewWsParam(vars.APIConfig.Knowledge.ID, vars.APIConfig.Knowledge.Key, vars.APIConfig.Knowledge.Model, text)
     wsURL := wsParam.createURL()
 
     c, _, err := websocket.DefaultDialer.Dial(wsURL, nil)

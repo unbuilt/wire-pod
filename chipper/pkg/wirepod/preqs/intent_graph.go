@@ -51,7 +51,7 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 				}
 				req.Stream.Send(response)
 				return nil, nil
-			} if vars.APIConfig.Knowledge.Provider == "spark" {
+			} else if vars.APIConfig.Knowledge.Provider == "spark" {
 				logger.Println("Sparking...")
 
 				// Get Spark response
