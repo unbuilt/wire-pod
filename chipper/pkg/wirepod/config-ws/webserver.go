@@ -206,7 +206,11 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		} else if kgProvider == "openai" && kgIntent == "false" {
 			vars.APIConfig.Knowledge.IntentGraph = false
 			vars.APIConfig.Knowledge.RobotName = ""
+		} else if kgProvider == "spark" {
+			vars.APIConfig.Knowledge.RobotName = r.FormValue("robot_name")
 		}
+		logger.Println(kgProvider)
+		logger.Println(vars.APIConfig.Knowledge.RobotName)
 		vars.WriteConfigToDisk()
 		fmt.Fprintf(w, "Changes successfully applied.")
 		return

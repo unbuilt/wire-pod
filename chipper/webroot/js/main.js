@@ -572,15 +572,18 @@ function checkKG() {
         document.getElementById("togetherInput").style.display = "none";
         document.getElementById("openAIInput").style.display = "none";
         document.getElementById("openAIRobotNameInput").style.display = "none";
+        document.getElementById("sparkInput").style.display = "none";
     } else if (document.getElementById("kgProvider").value=="houndify") {
         document.getElementById("openAIRobotNameInput").style.display = "none";  
         document.getElementById("togetherInput").style.display = "none";
         document.getElementById("openAIInput").style.display = "none";
         document.getElementById("houndifyInput").style.display = "block";
+        document.getElementById("sparkInput").style.display = "none";        
     } else if (document.getElementById("kgProvider").value=="openai") {
         document.getElementById("openAIInput").style.display = "block";
         document.getElementById("togetherInput").style.display = "none";
         document.getElementById("houndifyInput").style.display = "none";
+        document.getElementById("sparkInput").style.display = "none";
 
         if (document.getElementById("intentyes").checked == true) {
             document.getElementById("openAIRobotNameInput").style.display = "block";
@@ -592,6 +595,7 @@ function checkKG() {
         document.getElementById("togetherInput").style.display = "block";
         document.getElementById("openAIInput").style.display = "none";
         document.getElementById("houndifyInput").style.display = "none";
+        document.getElementById("sparkInput").style.display = "none";
     } else if (document.getElementById("kgProvider").value=="spark") {
       document.getElementById("sparkInput").style.display = "block";
       document.getElementById("openAIInput").style.display = "none";
@@ -630,7 +634,11 @@ function sendKGAPIKey() {
         key = document.getElementById("appKey").value
         model = document.getElementById("appSecret").value
         id = document.getElementById("appId").value
-        intentgraph = "false"        
+        robotName = "api20"
+        if (document.getElementById("api30").checked == true) {
+          robotName = "api30"
+        }
+        intentgraph = "false"
     } else {
         key = ""
         id = ""

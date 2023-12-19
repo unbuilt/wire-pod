@@ -18,7 +18,8 @@ import (
 )
 
 var (
-	hostUrl   = "wss://spark-api.xf-yun.com/v2.1/chat"
+	hostUrlV20   = "wss://spark-api.xf-yun.com/v2.1/chat"
+	hostUrlV30   = "wss://spark-api.xf-yun.com/v3.1/chat"
 	appid     = ""
 	apiSecret = ""
 	apiKey    = ""
@@ -29,6 +30,10 @@ func sparkRequest(transcribedText string) string {
 	logger.Println("Making request to Spark...")
 	d := websocket.Dialer{
 		HandshakeTimeout: 5 * time.Second,
+	}
+	hostUrl := hostUrlV20
+	if vars.APIConfig.Knowledge.RobotName == "api30" {
+		hostUrl = hostUrlV30
 	}
 	//握手并建立websocket 连接
 	conn, resp, err := d.Dial(assembleAuthUrl1(hostUrl, vars.APIConfig.Knowledge.Key, vars.APIConfig.Knowledge.Model), nil)
@@ -104,14 +109,17 @@ func genParams1(appid, question string) map[string]interface{} { // 根据实际
 	messages := []Message{
 		{Role: "user", Content: profile + question},
 	}
-
+	domain := "generalv2"
+	if vars.APIConfig.Knowledge.RobotName == "api30" {
+		domain = "generalv3"
+	}
 	data := map[string]interface{}{ // 根据实际情况修改返回的数据结构和字段名
 		"header": map[string]interface{}{ // 根据实际情况修改返回的数据结构和字段名
 			"app_id": appid, // 根据实际情况修改返回的数据结构和字段名
 		},
 		"parameter": map[string]interface{}{ // 根据实际情况修改返回的数据结构和字段名
 			"chat": map[string]interface{}{ // 根据实际情况修改返回的数据结构和字段名
-				"domain":      "generalv2",    // 根据实际情况修改返回的数据结构和字段名
+				"domain":      domain,    // 根据实际情况修改返回的数据结构和字段名
 				"temperature": float64(0.8), // 根据实际情况修改返回的数据结构和字段名
 				"top_k":       int64(6),     // 根据实际情况修改返回的数据结构和字段名
 				"max_tokens":  int64(2048),  // 根据实际情况修改返回的数据结构和字段名
