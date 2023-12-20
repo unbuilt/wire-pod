@@ -115,7 +115,9 @@ func genParams1(appid, question string) map[string]interface{} { // 根据实际
 	domain := "generalv2"
 	if vars.APIConfig.Knowledge.RobotName == "api30" {
 		domain = "generalv3"
-	}
+	} else if vars.APIConfig.Knowledge.RobotName == "api15" {
+		domain = "general"
+	} 
 	data := map[string]interface{}{ // 根据实际情况修改返回的数据结构和字段名
 		"header": map[string]interface{}{ // 根据实际情况修改返回的数据结构和字段名
 			"app_id": appid, // 根据实际情况修改返回的数据结构和字段名
