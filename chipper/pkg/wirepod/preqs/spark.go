@@ -209,7 +209,7 @@ type WsParam struct {
     APISecret  string
     Text       string
     CommonArgs map[string]string
-    BusinessArgs map[string]string
+    BusinessArgs map[string]interface{}
     Data       map[string]interface{}
 }
 
@@ -220,7 +220,7 @@ func NewWsParam(appid, apikey, apisecret, text string) *WsParam {
         APISecret:  apisecret,
         Text:       text,
         CommonArgs: map[string]string{"app_id": appid},
-        BusinessArgs: map[string]string{"aue": "raw", "auf": "audio/L16;rate=16000", "vcn": "aisbabyxu", "tte": "utf8"},
+        BusinessArgs: map[string]interface{}{"aue": "raw", "auf": "audio/L16;rate=16000", "vcn": "aisbabyxu", "tte": "utf8", "volume": 90},
         Data:       map[string]interface{}{"status": 2, "text": base64.StdEncoding.EncodeToString([]byte(text))},
     }
 }
