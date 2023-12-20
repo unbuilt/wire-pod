@@ -18,6 +18,7 @@ import (
 )
 
 var (
+	hostUrlV15   = "wss://spark-api.xf-yun.com/v1.1/chat"	
 	hostUrlV20   = "wss://spark-api.xf-yun.com/v2.1/chat"
 	hostUrlV30   = "wss://spark-api.xf-yun.com/v3.1/chat"
 	appid     = ""
@@ -34,6 +35,8 @@ func sparkRequest(transcribedText string) string {
 	hostUrl := hostUrlV20
 	if vars.APIConfig.Knowledge.RobotName == "api30" {
 		hostUrl = hostUrlV30
+	} else if vars.APIConfig.Knowledge.RobotName == "api15" {
+		hostUrl = hostUrlV15
 	}
 	//握手并建立websocket 连接
 	conn, resp, err := d.Dial(assembleAuthUrl1(hostUrl, vars.APIConfig.Knowledge.Key, vars.APIConfig.Knowledge.Model), nil)
