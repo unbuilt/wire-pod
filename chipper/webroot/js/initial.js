@@ -93,6 +93,7 @@ function initKGAPIKey() {
     var id = ""
     var intentgraph = ""
     var robotName = ""
+    var model = ""
 
     if (provider == "openai") {
         key = document.getElementById("openAIKey").value
@@ -106,13 +107,22 @@ function initKGAPIKey() {
         key = document.getElementById("houndKey").value
         id = document.getElementById("houndID").value
         intentgraph = "false"
+    } else if (provider == "spark") {
+        key = document.getElementById("appKey").value
+        model = document.getElementById("appSecret").value
+        id = document.getElementById("appId").value
+        robotName = "api20"
+        if (document.getElementById("api30").checked == true) {
+          robotName = "api30"
+        }
+        intentgraph = "false"        
     } else {
         key = ""
         id = ""
         intentgraph = "false"
     }
 
-    var data = "provider=" + provider + "&api_key=" + key + "&api_id=" + id + "&intent_graph=" + intentgraph + "&robot_name=" + robotName
+    var data = "provider=" + provider + "&api_key=" + key + "&model=" + model + "&api_id=" + id + "&intent_graph=" + intentgraph + "&robot_name=" + robotName
     fetch("/api/set_kg_api?" + data)
         .then(response => response.text())
         .then((response) => {
