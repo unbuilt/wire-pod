@@ -637,6 +637,8 @@ function sendKGAPIKey() {
         robotName = "api20"
         if (document.getElementById("api30").checked == true) {
           robotName = "api30"
+        } else if (document.getElementById("api15").checked == true) {
+          robotName = "api15"          
         }
         intentgraph = "false"
     } else {
