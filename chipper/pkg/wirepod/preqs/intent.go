@@ -71,6 +71,13 @@ func play_sound_data(audioData []byte, botSerial string) string {
 	robot := robotObj.Vector
 	ctx := robotObj.Ctx
 
+	if robot == nil {
+		return "intent_imperative_apologize"
+	}
+
+	if ctx == nil {
+		return "intent_imperative_apologize"
+	}
 
 	settings := RefreshSDKSettings(robot,ctx)
 	master_volume := int(settings["master_volume"].(float64))
@@ -165,25 +172,9 @@ func (s *Server) ProcessIntent(req *vtt.IntentRequest) (*vtt.IntentResponse, err
 			resp := openaiRequest(transcribedText)
 			logger.LogUI("OpenAI response for device " + req.Device + ": " + resp)
 			KGSim(req.Device, resp)
-		} else if transcribedText != "" {
-			logger.Println("Sparking...")
-
-			// Get Spark response
-			apiResponse := sparkRequest(transcribedText)
-			logger.Println("Spark response: " + apiResponse)
-
-			audioData := xftts(apiResponse)
-			if audioData == nil {
-				logger.Println("xftts error")
-				return nil, nil
-			}
-
-			logger.Println("playing")
-			play_sound_data(audioData, req.Device)
-			logger.Println("plaed")
 		}
 		logger.Println("No intent was matched.")
-		//ttr.IntentPass(req, "intent_system_noaudio", transcribedText, map[string]string{"": ""}, false)
+		ttr.IntentPass(req, "intent_system_noaudio", transcribedText, map[string]string{"": ""}, false)
 		return nil, nil
 	}
 	logger.Println("Bot " + speechReq.Device + " request served.")
