@@ -21,6 +21,7 @@ var (
 	hostUrlV15   = "wss://spark-api.xf-yun.com/v1.1/chat"	
 	hostUrlV20   = "wss://spark-api.xf-yun.com/v2.1/chat"
 	hostUrlV30   = "wss://spark-api.xf-yun.com/v3.1/chat"
+	hostUrlV35   = "wss://spark-api.xf-yun.com/v3.5/chat"	
 	appid     = ""
 	apiSecret = ""
 	apiKey    = ""
@@ -35,6 +36,8 @@ func sparkRequest(transcribedText string) string {
 	hostUrl := hostUrlV20
 	if vars.APIConfig.Knowledge.RobotName == "api30" {
 		hostUrl = hostUrlV30
+	} else if vars.APIConfig.Knowledge.RobotName == "api35" {
+		hostUrl = hostUrlV35
 	} else if vars.APIConfig.Knowledge.RobotName == "api15" {
 		hostUrl = hostUrlV15
 	}
@@ -107,13 +110,14 @@ func sparkRequest(transcribedText string) string {
 
 // 生成参数
 func genParams1(appid, question string) map[string]interface{} { // 根据实际情况修改返回的数据结构和字段名
-
-	profile := "你叫Vector，是一个桌面机器人，可以与人交互。请用简短的句子回复。\n\n"
 	messages := []Message{
-		{Role: "user", Content: profile + question},
+		{Role: "system", Content: "你叫Vector，是一个桌面机器人，可以与人交互。请用简短的句子回复。"},
+		{Role: "user", Content: question},
 	}
 	domain := "generalv2"
-	if vars.APIConfig.Knowledge.RobotName == "api30" {
+	if vars.APIConfig.Knowledge.RobotName == "api35" {
+		domain = "generalv3.5"
+	}  else if vars.APIConfig.Knowledge.RobotName == "api30" {
 		domain = "generalv3"
 	} else if vars.APIConfig.Knowledge.RobotName == "api15" {
 		domain = "general"
@@ -194,6 +198,7 @@ func readResp(resp *http.Response) string {
 type Message struct {
 	Role    string `json:"role"`
 	Content string `json:"content"`
+	ContentType string `json:"content_type"`
 }
 
 
@@ -300,4 +305,91 @@ func xftts(text string) []byte {
     }
 
 	return alldata
+}
+
+func imageUnderstand(imageData []byte, transcribedText string) string {
+	imageHost := "wss://spark-api.cn-huabei-1.xf-yun.com/v2.1/image"
+	d := websocket.Dialer{
+		HandshakeTimeout: 5 * time.Second,
+	}
+	//握手并建立websocket 连接
+	conn, resp, err := d.Dial(assembleAuthUrl1(imageHost, vars.APIConfig.Knowledge.Key, vars.APIConfig.Knowledge.Model), nil)
+	if err != nil {
+		panic(readResp(resp) + err.Error())
+		return ""
+	} else if resp.StatusCode != 101 {
+		panic(readResp(resp) + err.Error())
+	}
+
+	messages := []Message{
+		{Role: "user", Content: base64.StdEncoding.EncodeToString(imageData), ContentType: "image"}, // 首条必须是图片
+		{Role: "user", Content: transcribedText, ContentType: "text"},
+	}
+
+	data := map[string]interface{}{
+		"header": map[string]interface{}{
+			"app_id": vars.APIConfig.Knowledge.ID,
+		},
+		"parameter": map[string]interface{}{
+			"chat": map[string]interface{}{
+				"domain": "general",
+			},
+		},
+		"payload": map[string]interface{}{ // 根据实际情况修改返回的数据结构和字段名
+			"message": map[string]interface{}{ // 根据实际情况修改返回的数据结构和字段名
+				"text": messages, // 根据实际情况修改返回的数据结构和字段名
+			},
+		},
+	}
+	conn.WriteJSON(data)
+
+	var answer = ""
+	//获取返回的数据
+	for {
+		_, msg, err := conn.ReadMessage()
+		if err != nil {
+			fmt.Println("read message error:", err)
+			break
+		}
+
+		var data map[string]interface{}
+		err1 := json.Unmarshal(msg, &data)
+		if err1 != nil {
+			fmt.Println("Error parsing JSON:", err)
+			return ""
+		}
+		fmt.Println(string(msg))
+		//解析数据
+		payload := data["payload"].(map[string]interface{})
+		choices := payload["choices"].(map[string]interface{})
+		header := data["header"].(map[string]interface{})
+		code := header["code"].(float64)
+
+		if code != 0 {
+			fmt.Println(data["payload"])
+			return ""
+		}
+		status := choices["status"].(float64)
+		fmt.Println(status)
+		text := choices["text"].([]interface{})
+		content := text[0].(map[string]interface{})["content"].(string)
+		if status != 2 {
+			answer += content
+		} else {
+			fmt.Println("收到最终结果")
+			answer += content
+			usage := payload["usage"].(map[string]interface{})
+			temp := usage["text"].(map[string]interface{})
+			totalTokens := temp["total_tokens"].(float64)
+			fmt.Println("total_tokens:", totalTokens)
+			conn.Close()
+			break
+		}
+
+	}
+
+	//输出返回结果
+	fmt.Println(answer)	
+
+	return answer
 }

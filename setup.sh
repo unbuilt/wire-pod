@@ -136,6 +136,7 @@ function getSTT() {
         echo "1: Coqui (local, no usage collection, less accurate, a little slower)"
         echo "2: Picovoice Leopard (local, usage collected, accurate, account signup required)"
         echo "3: VOSK (local, accurate, multilanguage, fast, recommended)"
+        echo "4: IFlyTek"
         # echo "4: Whisper (local, accurate, multilanguage, a little slower, recommended for more powerful hardware)"
         echo
         read -p "Enter a number (3): " sttServiceNum
@@ -152,8 +153,8 @@ function getSTT() {
             sttService="leopard"
         elif [[ ${sttServiceNum} == "3" ]]; then
             sttService="vosk"
-        # elif [[ ${sttServiceNum} == "4" ]]; then
-        #     sttService="whisper"
+        elif [[ ${sttServiceNum} == "4" ]]; then
+             sttService="iflytek"
         else
             echo
             echo "Choose a valid number, or just press enter to use the default number."
@@ -217,6 +218,8 @@ function getSTT() {
             /usr/local/go/bin/go install github.com/alphacep/vosk-api/go
             cd ${origDir}
         fi
+    elif [[ ${sttService} == "iflytek" ]]; then
+        echo "export STT_SERVICE=iflytek" >> ./chipper/source.sh
     # elif [[ ${sttService} == "whisper" ]]; then
     #     echo "export STT_SERVICE=whisper.cpp" >> ./chipper/source.sh
     #     origDir="$(pwd)"

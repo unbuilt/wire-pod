@@ -637,10 +637,12 @@ function sendKGAPIKey() {
         robotName = "api20"
         if (document.getElementById("api30").checked == true) {
           robotName = "api30"
-        } else if (document.getElementById("api15").checked == true) {
+        } else if (document.getElementById("api35").checked == true) {
+          robotName = "api35"
+      } else if (document.getElementById("api15").checked == true) {
           robotName = "api15"          
         }
-        intentgraph = "false"
+        intentgraph = "true"
     } else {
         key = ""
         id = ""
