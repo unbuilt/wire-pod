@@ -9,12 +9,14 @@ import (
 
 	//pb "github.com/digital-dream-labs/api/go/chipperpb"
 	"fmt"
+	"strings"
 	"github.com/fforchino/vector-go-sdk/pkg/vectorpb"
 	"github.com/fforchino/vector-go-sdk/pkg/vector"
 	sdkWeb "github.com/kercre123/wire-pod/chipper/pkg/wirepod/sdkapp"
 	"context"
 	"time"
 	"encoding/json"
+	"io/ioutil"
 )
 
 
@@ -167,14 +169,80 @@ func (s *Server) ProcessIntent(req *vtt.IntentRequest) (*vtt.IntentResponse, err
 		return nil, nil
 	}
 	if !successMatched {
-		if vars.APIConfig.Knowledge.IntentGraph {
+		if vars.APIConfig.Knowledge.Provider == "iflytek" {
 			RemoveFromInterrupt(req.Device)
-			resp := openaiRequest(transcribedText)
-			logger.LogUI("OpenAI response for device " + req.Device + ": " + resp)
-			KGSim(req.Device, resp)
+			//resp := openaiRequest(transcribedText)
+			//logger.LogUI("OpenAI response for device " + req.Device + ": " + resp)
+			//KGSim(req.Device, resp)
+
+			// Check if text is empty
+			if transcribedText == "" {
+				return nil, nil
+			}
+
+			logger.Println("Sparking...")
+
+			useVision := false
+			if (strings.Contains(transcribedText, "你看")) {
+				useVision = true
+			}
+
+			apiResponse := ""
+
+			if (!useVision) {
+				// Get Spark response
+				apiResponse = sparkRequest(transcribedText)
+				logger.Println("Spark response: " + apiResponse)
+
+				audioData := xftts(apiResponse)
+				if audioData == nil {
+					logger.Println("xftts error")
+					return nil, nil
+				}
+
+				logger.Println("playing")
+				play_sound_data(audioData, req.Device)
+				logger.Println("played")
+			} else {
+				robotObj, _, _ := sdkWeb.GetRobot(req.Device)
+				robot := robotObj.Vector
+				ctx := robotObj.Ctx
+			
+				if robot == nil {
+					return nil, nil
+				}
+			
+				if ctx == nil {
+					return nil, nil
+				}
+
+				ir, err := robot.Conn.CaptureSingleImage(ctx, &vectorpb.CaptureSingleImageRequest{})
+				logger.Println("Captured")
+				//logger.Println(ir)
+				logger.Println(err)
+				// Save image
+				image_path := "/tmp/image.jpg"
+				ioutil.WriteFile(image_path, ir.GetData(), 0644)
+				logger.Println("Image saved to " + image_path)
+
+				apiResponse = imageUnderstand(ir.GetData(), transcribedText)
+
+				audioData := xftts(apiResponse)
+				if audioData == nil {
+					logger.Println("xftts error")
+					return nil, nil
+				}
+
+				logger.Println("playing")
+				play_sound_data(audioData, req.Device)
+				logger.Println("played")
+			}
+
+			return nil, nil
 		}
+
 		logger.Println("No intent was matched.")
-		ttr.IntentPass(req, "intent_system_noaudio", transcribedText, map[string]string{"": ""}, false)
+		//ttr.IntentPass(req, "intent_system_noaudio", transcribedText, map[string]string{"": ""}, false)
 		return nil, nil
 	}
 	logger.Println("Bot " + speechReq.Device + " request served.")

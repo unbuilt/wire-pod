@@ -43,6 +43,9 @@ func New(InitFunc func() error, SttHandler interface{}, voiceProcessor string) (
 	if voiceProcessor != "vosk" && voiceProcessor != "whisper.cpp" {
 		vars.APIConfig.STT.Language = "en-US"
 	}
+	if voiceProcessor == "iflytek" {
+		vars.APIConfig.STT.Language = "zh-CN"
+	}
 	sttLanguage = vars.APIConfig.STT.Language
 	vars.MatchListList, vars.IntentsList, _ = vars.LoadIntents()
 	logger.Println("Initiating " + voiceProcessor + " voice processor with language " + sttLanguage)

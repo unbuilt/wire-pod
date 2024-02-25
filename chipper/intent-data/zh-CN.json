@@ -93,11 +93,11 @@
 	},
 		{	
 		"name": "intent_imperative_affirmative",
-		"keyphrases" : ["当然", "正确", "对" ]
+		"keyphrases" : ["当然", "正确"]
 	},
 	{	
 		"name": "intent_imperative_negative", 
-		"keyphrases" : ["不", "错" ]
+		"keyphrases" : ["不对", "错" ]
 	},
 	{	
 		"name": "intent_photo_take_extend", 
@@ -129,7 +129,7 @@
 	},
 	{	
 		"name": "intent_imperative_lookatme", 
-		"keyphrases" : ["看我", "看着我" ]
+		"keyphrases" : ["看着我" ]
 	},
 	{	
 		"name": "intent_imperative_volumelevel_extend",
@@ -181,15 +181,15 @@
 	},
 	{	
 		"name": "intent_play_pickupcube",
-		"keyphrases" : ["拿 魔方", "魔方 给我" ]
+		"keyphrases" : ["拿 魔方", "魔方 给我", "拿魔方", "魔方给我" ]
 	},
 	{	
 		"name": "intent_imperative_fetchcube", 
-		"keyphrases" : ["取 魔方" ]
+		"keyphrases" : ["取 魔方", "取魔方" ]
 	},
 	{	
 		"name": "intent_imperative_findcube", 
-		"keyphrases" : ["找 魔方" ]
+		"keyphrases" : ["找 魔方", "找魔方" ]
 	},
 	{	
 		"name": "intent_play_anytrick", 
@@ -203,16 +203,8 @@
 		"name": "intent_message_playmessage_extend", 
 		"keyphrases" : ["播放 消息" ]
 	},
-		{	
-		"name": "intent_blackjack_hit", 
-		"keyphrases" : ["打"]
-	},
-	{	
-		"name": "intent_blackjack_stand", 
-		"keyphrases" : ["站" ]
-	},
 	{	
 		"name": "intent_play_keepaway",
-		"keyphrases": ["滚开", "远" ]
+		"keyphrases": ["滚开"]
 	}
 ]

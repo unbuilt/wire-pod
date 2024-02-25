@@ -46,6 +46,12 @@ elif [[ ${STT_SERVICE} == "houndify" ]]; then
   else
     /usr/local/go/bin/go run cmd/experimental/houndify/main.go
   fi
+elif [[ ${STT_SERVICE} == "iflytek" ]]; then
+  if [[ -f ./chipper ]]; then
+    ./chipper
+  else
+    /usr/local/go/bin/go run cmd/iflytek/main.go
+   fi  
 elif [[ ${STT_SERVICE} == "whisper" ]]; then
   if [[ -f ./chipper ]]; then
     ./chipper
