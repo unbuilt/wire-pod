@@ -139,9 +139,9 @@ function getSTT() {
         echo "4: IFlyTek"
         # echo "4: Whisper (local, accurate, multilanguage, a little slower, recommended for more powerful hardware)"
         echo
-        read -p "Enter a number (3): " sttServiceNum
+        read -p "Enter a number (4): " sttServiceNum
         if [[ ! -n ${sttServiceNum} ]]; then
-            sttService="vosk"
+            sttService="iflytek"
         elif [[ ${sttServiceNum} == "1" ]]; then
             if [[ ${TARGET} == "darwin" ]]; then
                 echo "Coqui is not supported for macOS. Please select another option."
@@ -543,6 +543,9 @@ function setupSystemd() {
         export CGO_LDFLAGS="-L $HOME/.vosk/libvosk -lvosk -ldl -lpthread"
         export LD_LIBRARY_PATH="$HOME/.vosk/libvosk:$LD_LIBRARY_PATH"
         /usr/local/go/bin/go build cmd/vosk/main.go
+    elif [[ ${STT_SERVICE} == "iflytek" ]]; then
+        echo "wire-pod.service created, building chipper with IFiytek STT service..."
+        /usr/local/go/bin/go build cmd/iflytek/main.go        
     else
         echo "wire-pod.service created, building chipper with Coqui STT service..."
         export CGO_LDFLAGS="-L$HOME/.coqui/"
