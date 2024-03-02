@@ -53,22 +53,34 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 				req.Stream.Send(response)
 				return nil, nil
 			} else if vars.APIConfig.Knowledge.Provider == "spark" {
-				logger.Println("Sparking...")
-
-				// Get Spark response
-				apiResponse := sparkRequest(transcribedText)
-				logger.Println("Spark response: " + apiResponse)
-
-				audioData := xftts(apiResponse)
-				if audioData == nil {
-					logger.Println("xftts error")
+				RemoveFromInterrupt(req.Device)
+				//resp := openaiRequest(transcribedText)
+				//logger.LogUI("OpenAI response for device " + req.Device + ": " + resp)
+				//KGSim(req.Device, resp)
+	
+				// Check if text is empty
+				if transcribedText == "" {
 					return nil, nil
 				}
-
-				logger.Println("playing")
-				play_sound_data(audioData, req.Device)
-				logger.Println("plaed")
-				return nil, nil
+	
+				// Get Spark response
+				apiResponse := sparkProcess(transcribedText, req.Device)
+	
+				if (apiResponse != "") {
+	
+					audioData := xftts(apiResponse)
+					if audioData == nil {
+						logger.Println("xftts error")
+						return nil, nil
+					}
+	
+					logger.Println("playing")
+					play_sound_data(audioData, req.Device)
+					logger.Println("played")
+	
+					ttr.IntentPass(req, "intent_imperative_praise", transcribedText, map[string]string{"": ""}, false)
+					return nil, nil
+				}
 			}
 		}
 		ttr.IntentPass(req, "intent_system_noaudio", transcribedText, map[string]string{"": ""}, false)

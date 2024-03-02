@@ -169,7 +169,7 @@ func (s *Server) ProcessIntent(req *vtt.IntentRequest) (*vtt.IntentResponse, err
 		return nil, nil
 	}
 	if !successMatched {
-		if vars.APIConfig.Knowledge.Provider == "iflytek" {
+		if vars.APIConfig.Knowledge.Provider == "spark" {
 			RemoveFromInterrupt(req.Device)
 			//resp := openaiRequest(transcribedText)
 			//logger.LogUI("OpenAI response for device " + req.Device + ": " + resp)
@@ -180,19 +180,10 @@ func (s *Server) ProcessIntent(req *vtt.IntentRequest) (*vtt.IntentResponse, err
 				return nil, nil
 			}
 
-			logger.Println("Sparking...")
+			// Get Spark response
+			apiResponse := sparkProcess(transcribedText, req.Device)
 
-			useVision := false
-			if (strings.Contains(transcribedText, "你看")) {
-				useVision = true
-			}
-
-			apiResponse := ""
-
-			if (!useVision) {
-				// Get Spark response
-				apiResponse = sparkRequest(transcribedText)
-				logger.Println("Spark response: " + apiResponse)
+			if (apiResponse != "") {
 
 				audioData := xftts(apiResponse)
 				if audioData == nil {
@@ -203,48 +194,63 @@ func (s *Server) ProcessIntent(req *vtt.IntentRequest) (*vtt.IntentResponse, err
 				logger.Println("playing")
 				play_sound_data(audioData, req.Device)
 				logger.Println("played")
-			} else {
-				robotObj, _, _ := sdkWeb.GetRobot(req.Device)
-				robot := robotObj.Vector
-				ctx := robotObj.Ctx
-			
-				if robot == nil {
-					return nil, nil
-				}
-			
-				if ctx == nil {
-					return nil, nil
-				}
 
-				ir, err := robot.Conn.CaptureSingleImage(ctx, &vectorpb.CaptureSingleImageRequest{})
-				logger.Println("Captured")
-				//logger.Println(ir)
-				logger.Println(err)
-				// Save image
-				image_path := "/tmp/image.jpg"
-				ioutil.WriteFile(image_path, ir.GetData(), 0644)
-				logger.Println("Image saved to " + image_path)
-
-				apiResponse = imageUnderstand(ir.GetData(), transcribedText)
-
-				audioData := xftts(apiResponse)
-				if audioData == nil {
-					logger.Println("xftts error")
-					return nil, nil
-				}
-
-				logger.Println("playing")
-				play_sound_data(audioData, req.Device)
-				logger.Println("played")
+				ttr.IntentPass(req, "intent_imperative_praise", transcribedText, map[string]string{"": ""}, false)
+				return nil, nil
 			}
-
-			return nil, nil
 		}
 
 		logger.Println("No intent was matched.")
-		//ttr.IntentPass(req, "intent_system_noaudio", transcribedText, map[string]string{"": ""}, false)
+		ttr.IntentPass(req, "intent_system_noaudio", transcribedText, map[string]string{"": ""}, false)
 		return nil, nil
 	}
 	logger.Println("Bot " + speechReq.Device + " request served.")
 	return nil, nil
+}
+
+
+func sparkProcess(transcribedText string, device string) string {
+	logger.Println("Sparking...")
+
+	useVision := false
+	if (strings.Contains(transcribedText, "你看")) {
+		useVision = true
+	}
+
+	apiResponse := ""
+
+	if (!useVision) {
+		// Get Spark response
+		apiResponse = sparkRequest(transcribedText)
+		logger.Println("Spark response: " + apiResponse)
+
+	} else {
+		robotObj, _, _ := sdkWeb.GetRobot(device)
+		robot := robotObj.Vector
+		ctx := robotObj.Ctx
+	
+		if robot == nil {
+			return ""
+		}
+	
+		if ctx == nil {
+			return ""
+		}
+
+		ir, err := robot.Conn.CaptureSingleImage(ctx, &vectorpb.CaptureSingleImageRequest{})
+		logger.Println("Captured")
+		//logger.Println(ir)
+		logger.Println(err)
+		// Save image
+		image_path := "/tmp/image.jpg"
+		ioutil.WriteFile(image_path, ir.GetData(), 0644)
+		logger.Println("Image saved to " + image_path)
+
+		apiResponse = imageUnderstand(ir.GetData(), transcribedText)
+
+		// Replace "你看" with "你看看"
+		//apiResponse = strings.Replace(apiResponse, "你看", "你看看", -1)
+	}
+
+	return apiResponse
 }
