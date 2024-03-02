@@ -38,7 +38,7 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 	}
 	if !successMatched {
 		logger.Println("No intent was matched.")
-		if vars.APIConfig.Knowledge.Enable && len([]rune(transcribedText)) >= 8 {
+		if vars.APIConfig.Knowledge.Enable {
 			logger.Println(vars.APIConfig.Knowledge.Provider)
 			if vars.APIConfig.Knowledge.Provider == "openai" {
 				apiResponse := openaiRequest(transcribedText)

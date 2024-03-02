@@ -294,8 +294,14 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 			processreqs.ReloadVosk()
 			logger.Println("Reloaded voice processor successfully")
 			fmt.Fprint(w, "language switched successfully")
+		} else if vars.APIConfig.STT.Service == "iflytek" {
+			vars.APIConfig.STT.Language = language
+			vars.APIConfig.PastInitialSetup = true
+			vars.WriteConfigToDisk()
+			processreqs.ReloadVosk()
+			fmt.Fprint(w, "language switched successfully")			
 		} else {
-			fmt.Fprint(w, "error: service must be vosk or whisper")
+			fmt.Fprint(w, "error: service must be vosk or whisper or iflytek")
 		}
 		return
 	case r.URL.Path == "/api/get_download_status":

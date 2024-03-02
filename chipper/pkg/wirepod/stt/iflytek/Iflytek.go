@@ -49,10 +49,10 @@ func STT(req sr.SpeechRequest) (string, error) {
     //握手并建立websocket 连接
     conn, resp, err := d.Dial(assembleAuthUrl(hostUrl, vars.APIConfig.Knowledge.Key, vars.APIConfig.Knowledge.Model), nil)
     if err != nil {
-        panic(readResp(resp)+err.Error())
+        //panic(readResp(resp)+err.Error())
         return "", nil
     }else if resp.StatusCode !=101{
-        panic(readResp(resp)+err.Error())
+        //panic(readResp(resp)+err.Error())
     }
 
     //开启协程，发送数据
@@ -68,6 +68,11 @@ func STT(req sr.SpeechRequest) (string, error) {
 			return "", err
 		}
 
+        lang := "zh_cn"
+        if (vars.APIConfig.STT.Language == "en-US") {
+            lang = "en_us"
+        }
+
 		switch status {
             case STATUS_FIRST_FRAME: //发送第一帧音频，带business 参数
                 frameData := map[string]interface{}{
@@ -75,7 +80,7 @@ func STT(req sr.SpeechRequest) (string, error) {
                         "app_id": vars.APIConfig.Knowledge.ID, //appid 必须带上，只需第一帧发送
                     },
                     "business": map[string]interface{}{ //business 参数，只需一帧发送
-                        "language":"zh_cn",
+                        "language":lang,
                         "domain":"iat",
                         "accent":"mandarin",
                     },

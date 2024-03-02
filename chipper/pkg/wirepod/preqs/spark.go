@@ -44,10 +44,11 @@ func sparkRequest(transcribedText string) string {
 	//握手并建立websocket 连接
 	conn, resp, err := d.Dial(assembleAuthUrl1(hostUrl, vars.APIConfig.Knowledge.Key, vars.APIConfig.Knowledge.Model), nil)
 	if err != nil {
-		panic(readResp(resp) + err.Error())
+		//panic(readResp(resp) + err.Error())
 		return ""
 	} else if resp.StatusCode != 101 {
-		panic(readResp(resp) + err.Error())
+		//panic(readResp(resp) + err.Error())
+		return ""
 	}
 
 	go func() {
@@ -315,10 +316,11 @@ func imageUnderstand(imageData []byte, transcribedText string) string {
 	//握手并建立websocket 连接
 	conn, resp, err := d.Dial(assembleAuthUrl1(imageHost, vars.APIConfig.Knowledge.Key, vars.APIConfig.Knowledge.Model), nil)
 	if err != nil {
-		panic(readResp(resp) + err.Error())
+		//panic(readResp(resp) + err.Error())
 		return ""
 	} else if resp.StatusCode != 101 {
-		panic(readResp(resp) + err.Error())
+		//panic(readResp(resp) + err.Error())
+		return ""
 	}
 
 	messages := []Message{

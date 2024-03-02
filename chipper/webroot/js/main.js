@@ -470,7 +470,7 @@ function showLanguage() {
     xhr.send();
     xhr.onload = function() {
         parsed = JSON.parse(xhr.response)
-        if (parsed["sttProvider"] != "vosk" && parsed["sttProvider"] != "whisper.cpp") {
+        if (parsed["sttProvider"] != "vosk" && parsed["sttProvider"] != "whisper.cpp" && parsed["sttProvider"] != "iflytek") {
           error = document.createElement("p")
           error.innerHTML = "To set the STT language, the provider must be Vosk or Whisper. The current one is '" + parsed["sttProvider"] + "'."
           document.getElementById("languageStatus").appendChild(error)
