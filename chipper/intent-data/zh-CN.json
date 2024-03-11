@@ -1,39 +1,39 @@
 [
 	{
 		"name" : "intent_names_username_extend", 
-		"keyphrases": ["名字" ]
+		"keyphrases": ["名字", "叫啥" ]
 	},
 	{	
 		"name": "intent_weather_extend", 
-		"keyphrases" : ["天气", "天气预报", "明天天气", "今天天气" ]
+		"keyphrases" : ["天气", "天气预报", "明天天气", "温度", "气温" ]
 	},
 	{	
 		"name": "intent_names_ask", 
-		"keyphrases" : ["我的名字", "我是" ]
+		"keyphrases" : ["我的名字", "认识我吗", "记得我吗" ]
 	},
 	{	
 		"name": "intent_imperative_eyecolor",
-		"keyphrases" : ["眼睛 颜色", "颜色" ]
+		"keyphrases" : ["眼睛 颜色", "颜色", "好心情" ]
 	},
 	{	
 		"name": "intent_character_age", 
-		"keyphrases" : ["多大", "你多大" ]
+		"keyphrases" : ["多大", "你多大", "几岁了", "年龄", "年纪" ]
 	},
 	{	
 		"name": "intent_explore_start", 
-		"keyphrases" : ["逛", "随便" ]
+		"keyphrases" : ["逛", "随便", "扫描", "溜达" ]
 	},
 	{	
 		"name": "intent_system_charger", 
-		"keyphrases" : ["回家", "充电" ]
+		"keyphrases" : ["回家", "充电", "休息" ]
 	},
 		{	
 		"name": "intent_system_sleep",
-		"keyphrases" : ["睡觉", "去 睡觉", "睡吧" ]
+		"keyphrases" : ["睡觉", "去 睡觉", "睡吧", "困了", "午休", "打盹" ]
 	},
 	{	
 		"name": "intent_greeting_goodmorning", 
-		"keyphrases" : ["早上 好", "早安", "中午 好", "下午 好", "你好" ]
+		"keyphrases" : ["早上 好", "早安", "中午 好", "午安", "下午 好" ]
 	},
 		{	
 		"name": "intent_greeting_goodnight", 
@@ -41,11 +41,11 @@
 	},
 		{	
 		"name": "intent_greeting_goodbye", 
-		"keyphrases" : ["再见", "回见" ]
+		"keyphrases" : ["再见", "回见", "明天见" ]
 	},
 	{	
 		"name": "intent_seasonal_happynewyear",
-		"keyphrases" : ["新年好", "烟花", "庆祝" ]
+		"keyphrases" : ["新年好", "烟花", "开心" ]
 	},
 	{	
 		"name": "intent_seasonal_happyholidays", 
@@ -53,15 +53,15 @@
 	},
 	{	
 		"name": "intent_amazon_signin", 
-		"keyphrases" : ["to alex", "up alexa" ]
+		"keyphrases" : ["to alex", "up alexa", "打开" ]
 	},
 	{	
 		"name": "intent_amazon_signin", 
-		"keyphrases" : ["out alexa" ]
+		"keyphrases" : ["out alexa", "退出" ]
 	},
 	{	
 		"name": "intent_imperative_forward",
-		"keyphrases" : ["向前", "往前" ]
+		"keyphrases" : ["向前", "往前", "前进" ]
 	},
 	{	
 		"name": "intent_imperative_turnaround", 
@@ -77,7 +77,7 @@
 	},
 	{	
 		"name": "intent_play_rollcube",
-		"keyphrases" : ["玩魔方" ]
+		"keyphrases" : ["玩魔方", "方块" ]
 	},
 	{	
 		"name": "intent_play_popawheelie", 
@@ -85,23 +85,23 @@
 	},
 	{	
 		"name": "intent_play_fistbump", 
-		"keyphrases" : ["碰拳", "击掌" ]
+		"keyphrases" : ["凤泉", "碰杯", "庆祝" ]
 	},
 		{	
 		"name": "intent_play_blackjack", 
-		"keyphrases" : ["玩牌" ]
+		"keyphrases" : ["扑克牌", "纸牌", "二十一点", "杰克", "玩游戏" ]
 	},
 		{	
 		"name": "intent_imperative_affirmative",
-		"keyphrases" : ["当然", "正确"]
+		"keyphrases" : ["当然", "正确", "对" ]
 	},
 	{	
 		"name": "intent_imperative_negative", 
-		"keyphrases" : ["不对", "错" ]
+		"keyphrases" : ["不", "错", "不要" ]
 	},
 	{	
 		"name": "intent_photo_take_extend", 
-		"keyphrases" : ["拍照" ]
+		"keyphrases" : ["拍照", "照相", "照片" ]
 	},
 	{	
 		"name": "intent_imperative_praise", 
@@ -117,19 +117,19 @@
 	},
 	{	
 		"name": "intent_imperative_backup", 
-		"keyphrases" : ["过来", "回来" ]
+		"keyphrases" : ["后退" ]
 	},
 	{	
 		"name": "intent_imperative_volumedown",
-		"keyphrases" : ["声音 小", "小声" ]
+		"keyphrases" : ["声音 小", "小声", "音量小" ]
 	},
 	{	
 		"name": "intent_imperative_volumeup", 
-		"keyphrases" : ["声音 大", "大声" ]
+		"keyphrases" : ["声音 大", "大声", "音量大" ]
 	},
 	{	
 		"name": "intent_imperative_lookatme", 
-		"keyphrases" : ["看着我" ]
+		"keyphrases" : ["找我" ]
 	},
 	{	
 		"name": "intent_imperative_volumelevel_extend",
@@ -145,11 +145,11 @@
 	},
 	{	
 		"name": "intent_imperative_come", 
-		"keyphrases" : ["过来" ]
+		"keyphrases" : ["来这边" ]
 	},
 	{	
 		"name": "intent_imperative_love",
-		"keyphrases" : ["喜欢", "爱" ]
+		"keyphrases" : ["喜欢", "爱你哟" ]
 	},
 	{	
 		"name": "intent_knowledge_promptquestion", 
@@ -169,7 +169,7 @@
 	},
 	{	
 		"name": "intent_clock_time", 
-		"keyphrases" : ["时间", "几点" ]
+		"keyphrases" : ["时间", "现在 几点" ]
 	},
 	{	
 		"name": "intent_imperative_quiet", 
@@ -181,19 +181,19 @@
 	},
 	{	
 		"name": "intent_play_pickupcube",
-		"keyphrases" : ["拿 魔方", "魔方 给我", "拿魔方", "魔方给我" ]
+		"keyphrases" : ["拿 魔方", "魔方 给我" ]
 	},
 	{	
 		"name": "intent_imperative_fetchcube", 
-		"keyphrases" : ["取 魔方", "取魔方" ]
+		"keyphrases" : ["取 魔方" ]
 	},
 	{	
 		"name": "intent_imperative_findcube", 
-		"keyphrases" : ["找 魔方", "找魔方" ]
+		"keyphrases" : ["找 魔方" ]
 	},
 	{	
 		"name": "intent_play_anytrick", 
-		"keyphrases" : ["技能" ]
+		"keyphrases" : ["技能", "很酷", "cool" ]
 	},
 	{	
 		"name": "intent_message_recordmessage_extend",
@@ -203,8 +203,16 @@
 		"name": "intent_message_playmessage_extend", 
 		"keyphrases" : ["播放 消息" ]
 	},
+		{	
+		"name": "intent_blackjack_hit", 
+		"keyphrases" : ["打" ]
+	},
+	{	
+		"name": "intent_blackjack_stand", 
+		"keyphrases" : ["站" ]
+	},
 	{	
 		"name": "intent_play_keepaway",
-		"keyphrases": ["滚开"]
+		"keyphrases": ["滚开", "远" ]
 	}
 ]
