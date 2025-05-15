@@ -100,9 +100,7 @@ func KgRequest(req *vtt.KnowledgeGraphRequest, speechReq sr.SpeechRequest) strin
 func (s *Server) ProcessKnowledgeGraph(req *vtt.KnowledgeGraphRequest) (*vtt.KnowledgeGraphResponse, error) {
 	InitKnowledge()
 	speechReq := sr.ReqToSpeechRequest(req)
-	if vars.APIConfig.Knowledge.Enable && vars.APIConfig.Knowledge.Provider != "houndify" {
-		streamingKG(req, speechReq)
-	} else {
+	if vars.APIConfig.Knowledge.Enable && vars.APIConfig.Knowledge.Provider == "xhoundify" {
 		apiResponse := KgRequest(req, speechReq)
 		kg := pb.KnowledgeGraphResponse{
 			Session:     req.Session,
@@ -114,6 +112,13 @@ func (s *Server) ProcessKnowledgeGraph(req *vtt.KnowledgeGraphRequest) (*vtt.Kno
 		if err := req.Stream.Send(&kg); err != nil {
 			return nil, err
 		}
+	} else if vars.APIConfig.Knowledge.Enable && vars.APIConfig.Knowledge.Provider != "plainaiv2" {
+		logger.Println("STTXiaozhi")
+		_, _ = XiaozhiSTT(speechReq)
+
+		return nil, nil
+	} else {
+		streamingKG(req, speechReq)
 	}
 	return nil, nil
 
