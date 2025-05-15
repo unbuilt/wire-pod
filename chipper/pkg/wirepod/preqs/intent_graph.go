@@ -2,15 +2,20 @@ package processreqs
 
 import (
 	"strings"
+	"fmt"	
 
 	"github.com/kercre123/wire-pod/chipper/pkg/logger"
 	"github.com/kercre123/wire-pod/chipper/pkg/vars"
 	"github.com/kercre123/wire-pod/chipper/pkg/vtt"
 	sr "github.com/kercre123/wire-pod/chipper/pkg/wirepod/speechrequest"
 	ttr "github.com/kercre123/wire-pod/chipper/pkg/wirepod/ttr"
+
+	"encoding/json"
+	"encoding/base64"
 )
 
 func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGraphResponse, error) {
+	logger.Println("Processing Intent Graph Request")
 	var successMatched bool
 	speechReq := sr.ReqToSpeechRequest(req)
 	var transcribedText string
@@ -60,17 +65,79 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 	// 	return nil, nil
 	// }
 	if !successMatched {
-		if vars.APIConfig.Knowledge.IntentGraph && vars.APIConfig.Knowledge.Enable {
-			logger.Println("Making LLM request for device " + req.Device + "...")
-			_, err := ttr.StreamingKGSim(req, req.Device, transcribedText, false)
-			if err != nil {
-				logger.Println("LLM error: " + err.Error())
-				logger.LogUI("LLM error: " + err.Error())
-				ttr.IntentPass(req, "intent_system_unmatched", transcribedText, map[string]string{"": ""}, false)
-				ttr.KGSim(req.Device, "There was an error getting a response from the L L M. Check the logs in the web interface.")
+		if vars.APIConfig.Knowledge.Provider == "spark" {
+			// Check if text is empty
+			if transcribedText == "" {
+				return nil, nil
 			}
-			logger.Println("Bot " + speechReq.Device + " request served.")
-			return nil, nil
+
+			ttr.IntentPass(req, "intent_greeting_hello", transcribedText, map[string]string{"": ""}, false)
+
+			// Get Spark response
+			apiResponse := sparkProcess(transcribedText, req.Device)
+
+			if (apiResponse != "") {
+
+				audioData := xftts(apiResponse)
+				if audioData == nil {
+					logger.Println("xftts error")
+					return nil, nil
+				}
+
+				logger.Println("playing")
+				play_sound_data(audioData, req.Device)
+				logger.Println("played")
+
+				ttr.IntentPass(req, "intent_imperative_praise", transcribedText, map[string]string{"": ""}, false)
+				return nil, nil
+			}
+		} else if vars.APIConfig.Knowledge.Provider != "plainai" {
+			logger.Println("PlainAI result")
+
+			useVision := false
+			var imageData []byte
+			imageData = nil
+			if strings.Contains(transcribedText, "你看") || strings.Contains(transcribedText, "看看") || strings.Contains(transcribedText, "这") {
+				useVision = true
+			}
+			if useVision {
+				imageData = captureImage(req.Device)
+			}
+
+			ttr.IntentPass(req, "intent_greeting_hello", transcribedText, map[string]string{"": ""}, false)
+
+			plainaiResponse := plainaiRequest(transcribedText, imageData, nil, req.Device)
+
+			var resp Response
+			err := json.Unmarshal([]byte(plainaiResponse), &resp)
+			if err != nil {
+				fmt.Println(err)
+				ttr.IntentPass(req, "intent_system_unmatched", transcribedText, map[string]string{"": ""}, false)
+				return nil, nil
+			}
+			
+			if resp.Result.Audio != "" {
+				audioData, _ := base64.StdEncoding.DecodeString(resp.Result.Audio)
+				logger.Println("playing")
+				play_sound_data(audioData, req.Device)
+				logger.Println("played")
+				
+				ttr.IntentPass(req, "intent_imperative_praise", transcribedText, map[string]string{"": ""}, false)
+				return nil, nil
+			}
+		} else {
+			if vars.APIConfig.Knowledge.IntentGraph && vars.APIConfig.Knowledge.Enable {
+				logger.Println("Making LLM request for device " + req.Device + "...")
+				_, err := ttr.StreamingKGSim(req, req.Device, transcribedText, false)
+				if err != nil {
+					logger.Println("LLM error: " + err.Error())
+					logger.LogUI("LLM error: " + err.Error())
+					ttr.IntentPass(req, "intent_system_unmatched", transcribedText, map[string]string{"": ""}, false)
+					ttr.KGSim(req.Device, "There was an error getting a response from the L L M. Check the logs in the web interface.")
+				}
+				logger.Println("Bot " + speechReq.Device + " request served.")
+				return nil, nil
+			}
 		}
 		logger.Println("No intent was matched.")
 		ttr.IntentPass(req, "intent_system_unmatched", transcribedText, map[string]string{"": ""}, false)
