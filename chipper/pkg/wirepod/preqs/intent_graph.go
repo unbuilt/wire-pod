@@ -18,6 +18,7 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 	logger.Println("Processing Intent Graph Request")
 	var successMatched bool
 	speechReq := sr.ReqToSpeechRequest(req)
+	StopConv(req.Device)
 	var transcribedText string
 	if !isSti {
 		var err error
@@ -91,7 +92,7 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 				ttr.IntentPass(req, "intent_imperative_praise", transcribedText, map[string]string{"": ""}, false)
 				return nil, nil
 			}
-		} else if vars.APIConfig.Knowledge.Provider != "plainai" {
+		} else if vars.APIConfig.Knowledge.Provider == "plainai" {
 			logger.Println("PlainAI result")
 
 			useVision := false
@@ -125,6 +126,11 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 				ttr.IntentPass(req, "intent_imperative_praise", transcribedText, map[string]string{"": ""}, false)
 				return nil, nil
 			}
+		} else if vars.APIConfig.Knowledge.Provider != "plainaiv2" {
+			logger.Println("PlainAI-2")
+			// Enter into KG
+			ttr.IntentPass(req, "intent_knowledge_promptquestion", transcribedText, map[string]string{"": ""}, false)
+			return nil, nil
 		} else {
 			if vars.APIConfig.Knowledge.IntentGraph && vars.APIConfig.Knowledge.Enable {
 				logger.Println("Making LLM request for device " + req.Device + "...")

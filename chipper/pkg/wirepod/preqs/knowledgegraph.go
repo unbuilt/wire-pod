@@ -113,8 +113,8 @@ func (s *Server) ProcessKnowledgeGraph(req *vtt.KnowledgeGraphRequest) (*vtt.Kno
 			return nil, err
 		}
 	} else if vars.APIConfig.Knowledge.Enable && vars.APIConfig.Knowledge.Provider != "plainaiv2" {
-		logger.Println("STTXiaozhi")
-		_, _ = XiaozhiSTT(speechReq)
+		logger.Println("plainaiv2")
+		_, _ = DoConv(speechReq)
 
 		return nil, nil
 	} else {

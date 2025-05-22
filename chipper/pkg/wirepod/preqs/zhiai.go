@@ -22,22 +22,50 @@ import (
 )
 
 
+// Has a map to track all the conversations
 
-// Need a state machine for Xiaozhi STT
-// Define the states
-type DeviceState int
-const (
-	Starting DeviceState = iota
-	Connecting
-	Idle
-	Listening
-	Speaking
-	Finalizing
-)
+var activeConversations = make(map[string]*XConversation)
 
-func XiaozhiSTT(req sr.SpeechRequest) (string, error) {
-	// Use WebSocket to send audio data to the server
-	// and receive the transcription result
+// Create a new conversation
+func DoConv(req sr.SpeechRequest) (string, error) {
+	// Check if the conversation already exists
+	if conv, ok := activeConversations[req.Device]; ok {
+		return conv.RunTurn(req)
+	}
+
+	// Create a new conversation
+	xconv := &XConversation{}
+	_, err := xconv.connect(req.Device)
+	if err != nil {
+		return "", err
+	}
+
+	activeConversations[req.Device] = xconv
+
+	return xconv.RunTurn(req)
+}
+
+func StopConv(deviceID string) {
+	logger.Println("Stopping conversation for device ID:", deviceID)
+	// Check if the conversation exists
+	if conv, ok := activeConversations[deviceID]; ok {
+		conv.disconnect()
+		delete(activeConversations, deviceID)
+	}
+}
+
+type XConversation struct {
+	DeviceID string
+	UserName string
+	conn	*websocket.Conn
+	sessionID string
+}
+
+func (x *XConversation) connect(deviceId string) (string, error) {
+	println("Connecting to Xiaozhi server...")
+
+	x.DeviceID = deviceId
+	x.UserName = "test-user"
 
 	host := "ws://localhost:8000"
 	//host := "wss://api.tenclass.net/xiaozhi/v1/"
@@ -47,7 +75,7 @@ func XiaozhiSTT(req sr.SpeechRequest) (string, error) {
 	// Set headers for the WebSocket connection
 	headers := http.Header{}
 	headers.Set("Content-Type", "application/json")
-	headers.Set("Device-ID", "8d:cd:62:27:1d:e4")//req.Device)
+	headers.Set("Device-ID", "8d:cd:62:27:1d:e4")//deviceId)
 	headers.Set("Client-ID", "test-client-id")
 	headers.Set("Protocol-Version", "1")
 	headers.Set("Authorization", "Bearer " + "test-token")
@@ -59,7 +87,21 @@ func XiaozhiSTT(req sr.SpeechRequest) (string, error) {
 		return "", err
 	}
 
-	defer conn.Close()
+	conn.SetCloseHandler(func(code int, text string) error {
+		logger.Println("Connection closed with code", code, ":", text)
+
+		if _, ok := activeConversations[x.DeviceID]; !ok {
+			logger.Println("Connection already closed")
+			return nil
+		}
+		logger.Println("Removing conversation for device ID:", x.DeviceID)
+		delete(activeConversations, x.DeviceID)
+		x.conn = nil
+		x.disconnect()
+
+		// Clean up resources or notify other goroutines
+		return nil
+	})	
 
 	// Send the Hello message to the server
 	// {"type":"hello","version":1,"transport":"websocket","audio_params":{"format":"opus","sample_rate":16000,"channels":1,"frame_duration":60}}
@@ -93,22 +135,25 @@ func XiaozhiSTT(req sr.SpeechRequest) (string, error) {
 		return "", err
 	}
 	sessionID, _ := helloResponse["session_id"].(string)
+	x.conn = conn
+	x.sessionID = sessionID
 
+	return sessionID, nil
+}
 
-	// Send the listen/detect message
-	// {"session_id":"a9b643ab-6107-4854-bfaf-fef5e734c4bd","type":"listen","state":"detect","text":"你好小智"}
-	//listenDetectMessage := map[string]interface{}{
-	//	"session_id": sessionID,
-	//	"type":       "listen",
-	//	"state":      "detect",
-	//	"text":       "你好小智",
-	//}
-	//err = conn.WriteJSON(listenDetectMessage)
-	//if err != nil {
-	//	logger.Println("Write error:", err)
-	//	return "", err
-	//}
+func (x *XConversation) disconnect() {
+	x.DeviceID = ""
+	x.UserName = ""
+	if x.conn != nil {
+		x.conn.Close()
+	}
+}
 
+func (x *XConversation) RunTurn(req sr.SpeechRequest) (string, error) {
+	println("Running turn...")
+
+	conn := x.conn
+	sessionID := x.sessionID
 
 	// Send listen/start message
 	// {"session_id":"a9b643ab-6107-4854-bfaf-fef5e734c4bd","type":"listen","state":"start","mode":"auto"}
@@ -118,7 +163,7 @@ func XiaozhiSTT(req sr.SpeechRequest) (string, error) {
 		"state":      "start",
 		"mode":       "auto",
 	}
-	err = conn.WriteJSON(listenStartMessage)
+	err := conn.WriteJSON(listenStartMessage)
 	if err != nil {
 		logger.Println("Write error:", err)
 		return "", err
@@ -267,7 +312,10 @@ func XiaozhiSTT(req sr.SpeechRequest) (string, error) {
 		messageType, message, err := conn.ReadMessage()
 		if err != nil {
 			logger.Println("Read error:", err)
-			return "", err
+			robotObj, _, _ := sdkWeb.GetRobot(req.Device)
+			robot := robotObj.Vector
+			robot.Conn.AppIntent(context.Background(), &vectorpb.AppIntentRequest{Intent: "knowledge_unknown"})
+			break
 		}
 		//logger.Println("Message type:", messageType)
 		//logger.Println("Message:", string(message))
@@ -433,10 +481,24 @@ func XiaozhiSTT(req sr.SpeechRequest) (string, error) {
 		}
 	}
 
-	logger.Println("Finalizing...")
+	logger.Println("Ending turn ...")
 
-	return "我有一个问题", nil
+	return "我有一个问题", nil	
 }
+
+
+// Need a state machine for Xiaozhi STT
+// Define the states
+type DeviceState int
+const (
+	Starting DeviceState = iota
+	Connecting
+	Idle
+	Listening
+	Speaking
+	Finalizing
+)
+
 
 func getSDKSettings(robot *vector.Vector,ctx context.Context) ([]byte, error) {
 	resp, err := robot.Conn.PullJdocs(ctx, &vectorpb.PullJdocsRequest{
