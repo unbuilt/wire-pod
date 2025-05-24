@@ -285,6 +285,7 @@ function checkKG() {
 
 function sendKGAPIKey() {
   const provider = getE("kgProvider").value;
+  console.log(provider, 'provider')
   const data = {
     enable: true,
     provider,
@@ -299,6 +300,7 @@ function sendKGAPIKey() {
     save_chat: false,
     commands_enable: false,
     endpoint: "",
+
   };
   if (provider === "openai") {
     data.key = getE("openaiKey").value;
@@ -326,6 +328,20 @@ function sendKGAPIKey() {
   } else if (provider === "houndify") {
     data.key = getE("houndKey").value;
     data.id = getE("houndID").value;
+  } else if (provider === "spark") {
+    data.key = getE("appKey").value;
+    data.model = getE("appSecret").value;
+    data.id = getE("appId").value;
+    var robotName = "api20"
+    if (getE("api30").checked === true) {
+      robotName = "api30"
+    } else if (getE("api35").checked === true) {
+        robotName = "api35"
+    } else if (getE("api15").checked === true) {
+        robotName = "api15"
+    }
+    data.robotName = robotName
+
   } else {
     data.enable = false;
   }
@@ -385,6 +401,22 @@ function updateKGAPI() {
       } else if (data.provider === "houndify") {
         getE("houndKey").value = data.key;
         getE("houndID").value = data.id;
+      }else if (data.provider === "spark") {
+        getE("appKey").value = data.key;
+        getE("appSecret").value = data.model;
+        getE("appId").value = data.id;
+        robotName = data.robotName
+        if (robotName == "api30") {  
+          getE("api30").checked = true
+        }
+        else if (robotName == "api35") {
+          getE("api35").checked = true
+        }
+        else if (robotName == "api15") {
+          getE("api15").checked = true
+        }else {
+          getE("api20").checked = true
+        }
       }
       checkKG();
     });
