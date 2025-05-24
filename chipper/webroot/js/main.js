@@ -253,6 +253,7 @@ function checkKG() {
     "saveChatInput",
     "llmCommandInput",
     "openAIVoiceForEnglishInput",
+    'sparkInput',
   ];
 
   elements.forEach((el) => (getE(el).style.display = "none"));
@@ -276,7 +277,9 @@ function checkKG() {
       getE("customAIInput").style.display = "block";
       getE("saveChatInput").style.display = "block";
       getE("llmCommandInput").style.display = "block";
-    }
+    }else if (provider == "spark") {
+      getE("sparkInput").style.display = "block";
+    } 
   }
 }
 
