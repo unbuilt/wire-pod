@@ -332,13 +332,13 @@ function sendKGAPIKey() {
     data.key = getE("appKey").value;
     data.model = getE("appSecret").value;
     data.id = getE("appId").value;
-    var robotName = "api20"
-    if (getE("api30").checked === true) {
-      robotName = "api30"
-    } else if (getE("api35").checked === true) {
-        robotName = "api35"
-    } else if (getE("api15").checked === true) {
-        robotName = "api15"
+    var robotName = "apipro"
+    if (getE("apimax").checked === true) {
+      robotName = "apimax"
+    } else if (getE("apiultra").checked === true) {
+        robotName = "apiultra"
+    } else if (getE("apilite").checked === true) {
+        robotName = "apilite"
     }
     data.robotName = robotName
 
@@ -406,16 +406,16 @@ function updateKGAPI() {
         getE("appSecret").value = data.model;
         getE("appId").value = data.id;
         robotName = data.robotName
-        if (robotName == "api30") {  
-          getE("api30").checked = true
+        if (robotName == "apimax") {  
+          getE("apimax").checked = true
         }
-        else if (robotName == "api35") {
-          getE("api35").checked = true
+        else if (robotName == "apiultra") {
+          getE("apiultra").checked = true
         }
-        else if (robotName == "api15") {
-          getE("api15").checked = true
+        else if (robotName == "apilite") {
+          getE("apilite").checked = true
         }else {
-          getE("api20").checked = true
+          getE("apipro").checked = true
         }
       }
       checkKG();

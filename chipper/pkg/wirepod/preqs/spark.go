@@ -18,10 +18,10 @@ import (
 )
 
 var (
-	hostUrlV15   = "wss://spark-api.xf-yun.com/v1.1/chat"	
-	hostUrlV20   = "wss://spark-api.xf-yun.com/v2.1/chat"
-	hostUrlV30   = "wss://spark-api.xf-yun.com/v3.1/chat"
-	hostUrlV35   = "wss://spark-api.xf-yun.com/v3.5/chat"	
+	hostUrlLite   = "wss://spark-api.xf-yun.com/v1.1/chat"	
+	hostUrlPro   = "wss://spark-api.xf-yun.com/v3.1/chat"
+	hostUrlMax   = "wss://spark-api.xf-yun.com/v3.5/chat"
+	hostUrlUltra   = "wss://spark-api.xf-yun.com/v4.0/chat"	
 	appid     = ""
 	apiSecret = ""
 	apiKey    = ""
@@ -33,13 +33,13 @@ func sparkRequest(transcribedText string) string {
 	d := websocket.Dialer{
 		HandshakeTimeout: 5 * time.Second,
 	}
-	hostUrl := hostUrlV20
-	if vars.APIConfig.Knowledge.RobotName == "api30" {
-		hostUrl = hostUrlV30
-	} else if vars.APIConfig.Knowledge.RobotName == "api35" {
-		hostUrl = hostUrlV35
-	} else if vars.APIConfig.Knowledge.RobotName == "api15" {
-		hostUrl = hostUrlV15
+	hostUrl := hostUrlPro
+	if vars.APIConfig.Knowledge.RobotName == "apimax" {
+		hostUrl = hostUrlMax
+	} else if vars.APIConfig.Knowledge.RobotName == "apiultra" {
+		hostUrl = hostUrlUltra
+	} else if vars.APIConfig.Knowledge.RobotName == "apilite" {
+		hostUrl = hostUrlLite
 	}
 	//握手并建立websocket 连接
 	conn, resp, err := d.Dial(assembleAuthUrl1(hostUrl, vars.APIConfig.Knowledge.Key, vars.APIConfig.Knowledge.Model), nil)
@@ -115,13 +115,13 @@ func genParams1(appid, question string) map[string]interface{} { // 根据实际
 		{Role: "system", Content: "你叫Vector，是一个桌面机器人，可以与人交互。请用简短的句子回复。"},
 		{Role: "user", Content: question},
 	}
-	domain := "generalv2"
-	if vars.APIConfig.Knowledge.RobotName == "api35" {
+	domain := "generalv3"
+	if vars.APIConfig.Knowledge.RobotName == "apiultra" {
+		domain = "4.0Ultra"
+	}  else if vars.APIConfig.Knowledge.RobotName == "apimax" {
 		domain = "generalv3.5"
-	}  else if vars.APIConfig.Knowledge.RobotName == "api30" {
-		domain = "generalv3"
-	} else if vars.APIConfig.Knowledge.RobotName == "api15" {
-		domain = "general"
+	} else if vars.APIConfig.Knowledge.RobotName == "apilite" {
+		domain = "lite"
 	} 
 	data := map[string]interface{}{ // 根据实际情况修改返回的数据结构和字段名
 		"header": map[string]interface{}{ // 根据实际情况修改返回的数据结构和字段名
