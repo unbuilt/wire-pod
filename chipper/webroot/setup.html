@@ -81,6 +81,9 @@
             <label for="kgProvider">Knowledge Graph API Provider:</label>
             <select name="kgProvider" id="kgProvider" form="kgAPIAddForm" onchange="checkKG()">
               <option value="" selected>None</option>
+              <option value="plainai">PlainAI</option>
+              <option value="zhix">ZhiX</option>
+              <option value="spark">Spark</option>
               <option value="openai">OpenAI</option>
               <option value="houndify">Houndify</option>
               <option value="together">Together</option>
@@ -152,6 +155,72 @@
                   informative.")</label></small>
               <input type="text" name="customAIPrompt" id="customAIPrompt" /><br />
             </span>
+            <span id="sparkInput" style="display: none">
+              <br />
+              <label>
+                Select Spark LLM API Version
+              </label> 
+              <br />
+             
+              <label for="apilite">&nbsp;&nbsp;&nbsp;&nbsp;Lite</label>
+              <input type="radio" id="apilite" name="apiselect" value="Lite">            
+              <label for="apipro">&nbsp;&nbsp;&nbsp;&nbsp;Pro</label>
+              <input type="radio" id="apipro" name="apiselect" value="Pro">
+              <label for="apimax">&nbsp;&nbsp;&nbsp;&nbsp;Max</label>
+              <input type="radio" id="apimax" name="apiselect" value="Max">
+              <label for="apiultra">&nbsp;&nbsp;&nbsp;&nbsp;Ultra</label>
+              <input type="radio" id="apiultra" name="apiselect" value="Ultra">
+              <br />
+              <br />
+              <label for="appId"><div>AppId:</div></label>
+              <input type="text" name="appId" id="appId" /> <br/>
+              <label for="appSecret"><div>appSecret:</div></label>
+              <input type="text" name="appSecret" id="appSecret" /><br/>
+              <label for="appKey"><div>appKey:</div></label>
+              <input type="text" name="appKey" id="appKey" /><br />         
+
+              <label for="sparkPrompt"
+                >Spark Prompt (leave blank for default):</label
+              ><br />
+              <small
+                ><label for="sparkPrompt"
+                  >(default: "You are a helpful, animated robot called Vector.
+                  Keep the response concise yet informative.")</label
+                ></small
+              >
+              <input
+                type="text"
+                name="sparkPrompt"
+                id="sparkPrompt"
+              /><br />
+              <br />
+            </span> 
+            <span id="plainAIInput" style="display: none">
+              <br />
+              <label for="plainAIKey">PlainAI Key:</label>
+              <input type="text" name="plainAIKey" id="plainAIKey" /><br />
+              <label for="plainAIPrompt"
+                >LLM Prompt (leave blank for default):</label
+              ><br />
+              <small
+                ><label for="plainAIPrompt"
+                  >(default: "You are a helpful, animated robot called Vector.
+                  Keep the response concise yet informative.")</label
+                ></small
+              >
+              <input
+                type="text"
+                name="plainAIPrompt"
+                id="plainAIPrompt"
+              /><br />
+            </span>
+            <span id="zhiXInput" style="display: none">
+              <br />
+              <label for="zhiXKey"><div>ZhiX Key:</div></label>
+              <input type="text" name="zhiXKey" id="zhiXKey" /><br />
+              <label for="zhiXEndpoint">ZhiX Endpoint <small>(optional)</small> :</label>
+            <input type="text" name="zhiXEndpoint" id="zhiXEndpoint" /><br />
+            </span>      
 
             <div style="text-align: left;">
               <span id="intentGraphInput" style="display: none;">
@@ -181,7 +250,7 @@
                 <label class="checkbox-label" for="voiceEnglishYes">
                   Use the OpenAI TTS voice for English as well.
                 </label>
-              </span>
+              </span>           
             </div>
 
           </form>

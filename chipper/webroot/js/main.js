@@ -253,6 +253,9 @@ function checkKG() {
     "saveChatInput",
     "llmCommandInput",
     "openAIVoiceForEnglishInput",
+    "sparkInput",
+    "plainAIInput",
+    "zhiXInput"
   ];
 
   elements.forEach((el) => (getE(el).style.display = "none"));
@@ -276,12 +279,20 @@ function checkKG() {
       getE("customAIInput").style.display = "block";
       getE("saveChatInput").style.display = "block";
       getE("llmCommandInput").style.display = "block";
+    }else if (provider === "spark") {
+      getE("sparkInput").style.display = "block";
+    }
+    else if (provider === "plainai") {
+      getE("plainAIInput").style.display = "block";
+    } else if (provider === "zhix") {
+      getE("zhiXInput").style.display = "block";
     }
   }
 }
 
 function sendKGAPIKey() {
   const provider = getE("kgProvider").value;
+  console.log(provider, 'provider')
   const data = {
     enable: true,
     provider,
@@ -296,6 +307,7 @@ function sendKGAPIKey() {
     save_chat: false,
     commands_enable: false,
     endpoint: "",
+
   };
   if (provider === "openai") {
     data.key = getE("openaiKey").value;
@@ -323,7 +335,28 @@ function sendKGAPIKey() {
   } else if (provider === "houndify") {
     data.key = getE("houndKey").value;
     data.id = getE("houndID").value;
-  } else {
+  } else if (provider === "spark") {
+    data.key = getE("appKey").value;
+    data.model = getE("appSecret").value;
+    data.id = getE("appId").value;
+    var robotName = "apipro"
+    if (getE("apimax").checked === true) {
+      robotName = "apimax"
+    } else if (getE("apiultra").checked === true) {
+        robotName = "apiultra"
+    } else if (getE("apilite").checked === true) {
+        robotName = "apilite"
+    }
+    data.robotName = robotName
+
+  }else if (provider === "plainai") {
+    data.key = getE("plainAIKey").value;
+
+  }else if( provider === "zhix") {  
+    data.key = getE("zhiXKey").value;
+    data.endpoint = getE("zhiXEndpoint").value ??'';
+   }
+   else {
     data.enable = false;
   }
 
@@ -382,7 +415,28 @@ function updateKGAPI() {
       } else if (data.provider === "houndify") {
         getE("houndKey").value = data.key;
         getE("houndID").value = data.id;
-      }
+      }else if (data.provider === "spark") {
+        getE("appKey").value = data.key;
+        getE("appSecret").value = data.model;
+        getE("appId").value = data.id;
+        robotName = data.robotName
+        if (robotName == "apimax") {  
+          getE("apimax").checked = true
+        }
+        else if (robotName == "apiultra") {
+          getE("apiultra").checked = true
+        }
+        else if (robotName == "apilite") {
+          getE("apilite").checked = true
+        }else {
+          getE("apipro").checked = true
+        }
+      }  else if (data.provider === "plainai") {
+        getE("plainAIKey").value = data.key;
+      }else if (data.provider === "zhix") {
+        getE("zhiXKey").value = data.key;
+        getE("zhiXEndpoint").value = data.endpoint;
+       }
       checkKG();
     });
 }

@@ -8,7 +8,7 @@ import (
 	"net/http"
 
 	"github.com/kercre123/wire-pod/chipper/pkg/logger"
-	//"github.com/kercre123/wire-pod/chipper/pkg/vars"
+	"github.com/kercre123/wire-pod/chipper/pkg/vars"
 	sr "github.com/kercre123/wire-pod/chipper/pkg/wirepod/speechrequest"
 	"github.com/gorilla/websocket"
 	"gopkg.in/hraban/opus.v2"
@@ -68,14 +68,17 @@ func (x *XConversation) connect(deviceId string) (string, error) {
 	x.UserName = "test-user"
 
 	host := "ws://localhost:8000"
-	//host := "wss://api.tenclass.net/xiaozhi/v1/"
+	if vars.APIConfig.Knowledge.Endpoint != "" {
+		host = vars.APIConfig.Knowledge.Endpoint
+	}
+	apiKey := vars.APIConfig.Knowledge.Key
 	dialer := websocket.Dialer{}
 	dialer.HandshakeTimeout = 5 * time.Second
 
 	// Set headers for the WebSocket connection
 	headers := http.Header{}
 	headers.Set("Content-Type", "application/json")
-	headers.Set("Device-ID", "8d:cd:62:27:1d:e4")//deviceId)
+	headers.Set("Device-ID", apiKey)
 	headers.Set("Client-ID", "test-client-id")
 	headers.Set("Protocol-Version", "1")
 	headers.Set("Authorization", "Bearer " + "test-token")
