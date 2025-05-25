@@ -351,7 +351,7 @@ function sendKGAPIKey() {
 
   }else if (provider === "plainai") {
     data.key = getE("plainAIKey").value;
-
+    data.openai_prompt = getE("plainAINickName").value;
   }else if( provider === "zhix") {  
     data.key = getE("zhiXKey").value;
     data.endpoint = getE("zhiXEndpoint").value ??'';
@@ -433,6 +433,7 @@ function updateKGAPI() {
         }
       }  else if (data.provider === "plainai") {
         getE("plainAIKey").value = data.key;
+        getE("plainAINickName").value = data.openai_prompt;
       }else if (data.provider === "zhix") {
         getE("zhiXKey").value = data.key;
         getE("zhiXEndpoint").value = data.endpoint;
@@ -550,7 +551,7 @@ function updateColor(id) {
 
 
 function showLog() {
-  toggleVisibility(["section-intents", "section-log", "section-botauth", "section-version", "section-uicustomizer"], "section-log", "icon-Logs");
+  toggleVisibility(["section-intents", "section-log", "section-botauth", "section-uicustomizer"], "section-log", "icon-Logs");
   logDivArea = getE("botTranscriptedTextArea");
   getE("logscrollbottom").checked = true;
   logP = document.createElement("p");
@@ -644,7 +645,7 @@ function showVersion() {
 }
 
 function showIntents() {
-  toggleVisibility(["section-log", "section-botauth", "section-intents", "section-version", "section-uicustomizer"], "section-intents", "icon-Intents");
+  toggleVisibility(["section-log", "section-botauth", "section-intents", "section-uicustomizer"], "section-intents", "icon-Intents");
 }
 
 function showWeather() {
@@ -656,6 +657,7 @@ function showKG() {
 }
 
 function toggleVisibility(sections, sectionToShow, iconId) {
+  console.log(sections, sectionToShow, iconId, 'jjjjjj');
   if (sectionToShow != "section-log") {
     GetLog = false;
   }
