@@ -102,7 +102,7 @@ func plainaiRequest(text string, imageData []byte, audio_data []byte, deviceId s
 
 	req_plainai.Header.Set("Content-Type", "application/json")
     req_plainai.Header.Set("x-device-id", victorDeviceId)
-    req_plainai.Header.Set("x-subscription-key", "222")//vars.APIConfig.Knowledge.Key)
+    req_plainai.Header.Set("x-subscription-key", vars.APIConfig.Knowledge.Key)
 
     client := &http.Client{}
     response, err := client.Do(req_plainai)
