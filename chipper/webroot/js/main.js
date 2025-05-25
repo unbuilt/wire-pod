@@ -253,7 +253,8 @@ function checkKG() {
     "saveChatInput",
     "llmCommandInput",
     "openAIVoiceForEnglishInput",
-    'sparkInput',
+    "sparkInput",
+    "plainAIInput"
   ];
 
   elements.forEach((el) => (getE(el).style.display = "none"));
@@ -279,6 +280,9 @@ function checkKG() {
       getE("llmCommandInput").style.display = "block";
     }else if (provider == "spark") {
       getE("sparkInput").style.display = "block";
+    }
+    else if (provider == "plainai") {
+      getE("plainAIInput").style.display = "block";
     } 
   }
 }
@@ -341,6 +345,9 @@ function sendKGAPIKey() {
         robotName = "apilite"
     }
     data.robotName = robotName
+
+  }else if (provider === "plainai") {
+    data.key = getE("plainAIKey").value;
 
   } else {
     data.enable = false;
@@ -417,6 +424,8 @@ function updateKGAPI() {
         }else {
           getE("apipro").checked = true
         }
+      }  else if (data.provider === "plainai") {
+        getE("plainAIKey").value = data.key;
       }
       checkKG();
     });

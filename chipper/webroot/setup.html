@@ -81,6 +81,7 @@
             <label for="kgProvider">Knowledge Graph API Provider:</label>
             <select name="kgProvider" id="kgProvider" form="kgAPIAddForm" onchange="checkKG()">
               <option value="" selected>None</option>
+              <option value="plainai">PlainAI</option>
               <option value="spark">Spark</option>
               <option value="openai">OpenAI</option>
               <option value="houndify">Houndify</option>
@@ -192,7 +193,26 @@
                 id="sparkPrompt"
               /><br />
               <br />
-            </span>   
+            </span> 
+            <span id="plainAIInput" style="display: none">
+                <br />
+                <label for="plainAIKey">PlainAI Key:</label>
+                <input type="text" name="plainAIKey" id="plainAIKey" /><br />
+                <label for="plainAIPrompt"
+                  >LLM Prompt (leave blank for default):</label
+                ><br />
+                <small
+                  ><label for="plainAIPrompt"
+                    >(default: "You are a helpful, animated robot called Vector.
+                    Keep the response concise yet informative.")</label
+                  ></small
+                >
+                <input
+                  type="text"
+                  name="plainAIPrompt"
+                  id="plainAIPrompt"
+                /><br />
+              </span>      
 
             <div style="text-align: left;">
               <span id="intentGraphInput" style="display: none;">
