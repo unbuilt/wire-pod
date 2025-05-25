@@ -3,7 +3,7 @@
 
 <head>
     
-  <title>Wire-Pod Initial Setup</title>
+  <title>Wire-Pod盒服初始设置</title>
   <!-- Meta Apple tags for a PWA like experience. -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -19,41 +19,40 @@
 <body>
   <div id="outer">
     <div id="content" class="">
-      <h1>Wire-Pod Setup</h1>
+      <h1>Wire-Pod盒服初始设置</h1>
       <hr />
       <div id="setup-status"></div>
       <div id="config-options" style="display: block">
         <p>
-          Welcome to wire-pod! Configure these
-          options to your liking then click the "Submit Settings" button at the
-          bottom to finish setting up wire-pod.
+          欢迎来到Wire-Pod本地盒服！这是设置的最后一步。根据您的喜好配置这些选项，然后点击底部的“提交设置”按钮来完成最后的设置
         </p>
         <hr />
         <div id="section-conn" style="display: block">
-          <h3>Connection Method</h3>
+          <h3>连接选项</h3>
           <hr class="small-hr">
           <div class="center" id="connStatus"></div>
           <select onchange="checkConn()" name="connSelection" id="connSelection">
             <option value="ep">
-              Escape Pod (recommended for regular, production robots)
+              逃生舱（推荐用于常规机器人）
             </option>
             <option value="ip">
-              IP Address (recommended for OSKR/dev-unlocked robots)
+              IP 地址（推荐用于 OSKR/dev-unlocked 机器人）
             </option>
           </select>
           <div class="center" id="portViz" style="display: none">
-            <label for="portInput">Input custom port here (default is 443)</label>
+            <label for="portInput">在此输入自定义端口（默认为 443）</label>
             <input type="text" id="portInput" name="portInput" placeholder="443" />
           </div>
           <hr />
         </div>
 
         <div id="section-language" style="display: none">
-          <h3>Speech-to-Text Language</h3>
+          <h3>语音转文字语言</h3>
           <hr class="small-hr">
           <div class="center" id="languageStatus"></div>
           <div id="languageSelectionDiv">
             <select name="languageSelection" id="languageSelection">
+              <option value="zh-CN">中文（中国）</option>
               <option value="en-US">English (US)</option>
               <option value="it-IT">Italian (IT)</option>
               <option value="es-ES">Spanish (ES)</option>
@@ -62,7 +61,6 @@
               <option value="pt-BR">Portuguese (BR)</option>
               <option value="pl-PL">Polish (PL)</option>
               <option value="tr-TR">Turkish (TR)</option>
-              <option value="zh-CN">Chinese (CN)</option>
               <option value="ru-RU">Russian (RU)</option>
               <option value="nt-NL">Dutch (NL)</option>
               <option value="uk-UA">Ukrainian (UA)</option>
@@ -72,12 +70,11 @@
           <hr />
         </div>
 
-        <small class="desc">Weather and Knowledge Graph settings can be configured in the Server Settings page once
-          wire-pod is set up.</small>
+        <small class="desc">设置好Wire-Pod盒服，就可以在服务器设置页面配置天气和知识图谱设置。</small>
         <hr />
 
         <button onclick="sendSetupInfo()">
-          Submit Settings
+          提交设置
         </button>
       </div>
     </div>

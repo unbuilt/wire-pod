@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Wire-Pod</title>
+  <title>Vector本地盒服</title>
   <!-- Meta Apple tags for a PWA like experience. -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -18,7 +18,7 @@
 <body>
   <div id="outer">
     <div id="content" class="">
-      <h1>Wire-Pod</h1>
+      <h1>Vector本地盒服</h1>
       <!-- Bot stats, connected and battery -->
       <div id="botStats"></div>
       <hr />
@@ -26,81 +26,83 @@
       <div class="main-nav-parent">
         <!--WP settings-->
         <div class="main-nav-child">
-          <a href="setup.html"><i class="fa-solid fa-gear"></i><br />Server Settings</a>
+          <a href="setup.html"><i class="fa-solid fa-gear"></i><br />服务器设置</a>
         </div>
         <!--Bot Settings-->
         <div class="main-nav-child">
-          <a href="/sdkapp"><i class="fa solid fa-toolbox"></i><br />Bot Settings</a>
+          <a href="/sdkapp"><i class="fa solid fa-toolbox"></i><br />Vector设置</a>
         </div>
         <!--Bot Setup-->
         <div class="main-nav-child">
           <a href="#" onclick="showBotAuth(); return false;"><i class="fa solid fa-robot" id="icon-BotAuth"
-              name="icon"></i><br />Bot Setup</a>
+              name="icon"></i><br />Vector安装</a>
         </div>
         <!--Custom Intents-->
         <div class="main-nav-child">
           <a href="#" onclick="showIntents(); return false;"><i class="fa-solid fa-microphone-lines" id="icon-Intents"
-              name="icon"></i><br />Custom Intents</a>
+              name="icon"></i><br />自定义动作</a>
         </div>
         <!--Logs-->
         <div class="main-nav-child">
           <a href="#" onclick="showLog(); return false;"><i class="fa-solid fa-file-lines" id="icon-Logs"
-              name="icon"></i><br />Log</a>
+              name="icon"></i><br />系统日志</a>
         </div>
         <!--Version-->
-        <div class="main-nav-child">
+        <!-- <div class="main-nav-child">
           <a href="#" onclick="showVersion(); return false;"><i class="fa-solid fa-code-compare" id="icon-Version"
               name="icon"></i><br />Version Info</a>
-        </div>
+        </div> -->
         <!--UI Customizer-->
         <div class="main-nav-child">
           <a href="#" onclick="showUICustomizer(); return false;"><i class="fa-solid fa-pen-nib" id="icon-Customizer"
-              name="icon"></i><br />UI Settings</a>
+              name="icon"></i><br />UI设置</a>
         </div>
       </div>
       <hr />
 
+      <span class="small-text" style="color: grey; display: flex; justify-content: center;">盒服使用教程请前往<a href="https://vector-day.com.cn/html2/index.html" target="_blank">vector-day.com</a>查询</span><br/>
+
+        <span class="small-text" style="color: grey;">感谢以下爱好者为本地服务器做出的努力！</span><br/>
+        <span class="small-text" style="color: grey;">★中文智能语音:<a href="https://www.douyin.com/user/MS4wLjABAAAA3ubzEVzUMbnPhXL00TdpqkwOMah7iCeeZ2pXQAuF9qE">@旋</a>    ★服务器界面汉化:@黄蜀黍</span><br/>
+
+        <span class="small-text" style="color: grey;">★远程技术服务:<a href="https://www.douyin.com/user/MS4wLjABAAAAOt4pTJMV1z80PwVKWajplvvnoauJMLHa3DxZq0wURMw">@歪特的日常</a>（使用教程：<a href="https://www.douyin.com/user/MS4wLjABAAAAOt4pTJMV1z80PwVKWajplvvnoauJMLHa3DxZq0wURMw">抖音</a>  <a href="https://space.bilibili.com/370417600?plat_id=1&share_from=space&share_medium=iphone&share_plat=ios&share_session_id=64B9030C-E4AA-479C-9B6C-4A93F13BC60C&share_source=WEIXIN&share_tag=s_i&spmid=main.space.0.0&timestamp=1710330707&unique_k=3UgqSEt">哔哩哔哩</a>  <a href="https://www.xiaohongshu.com/user/profile/5dfb37cc0000000001004830?xhsshare=CopyLink&appuid=5dfb37cc0000000001004830&apptime=1710330878">小红书</a>  <a href="https://v.ixigua.com/iFDFj4gD/">西瓜视频</a>  <a href="https://goofish.com/">闲鱼</a>  等搜索@歪特的日常）</span><br/>
+
       <div id="section-intents" style="display: none">
         <h2 id="foldable-add" onclick="toggleSection('content-add', 'content-edit')">
           <span>+</span>
-          Add a custom intent
+          添加自定义意图
         </h2>
         <div class="content" id="content-add">
-          <p>
-            For more details, see
-            <a href="https://github.com/kercre123/wire-pod/wiki/Custom-Intents" target="_blank">the Custom Intents page of the wiki</a>
-          </p>
+          <p>建议阅读<a href="https://github.com/kercre123/wire-pod/wiki/Things-to-Know#web-interface" target="_blank">the wiki</a></p>
           <div id="addIntentStatus"></div>
           <form id="intentAddForm">
-            <label for="nameAdd">Custom intent name:</label>
+            <label for="nameAdd">自定义意图名称:</label>
             <input type="text" name="nameAdd" id="nameAdd" /><br />
-            <label for="descriptionAdd">Custom intent description:</label>
+            <label for="descriptionAdd">自定义意图描述:</label>
             <input type="text" name="descriptionAdd" id="descriptionAdd" /><br />
-            <label for="utterancesAdd">Utterances that will trigger the intent (separated by
-              ,):</label>
+            <label for="utterancesAdd">触发该意图的话语（用逗号分隔）:</label>
             <input type="text" name="utterancesAdd" id="utterancesAdd" /><br />
             <div id="intentAddSelect"></div>
-            <label for="paramnameAdd">Intent parameter name (not required):</label>
+            <label for="paramnameAdd">意图参数名称（可选）:</label>
             <input type="text" name="paramnameAdd" id="paramnameAdd" /><br />
-            <label for="paramvalueAdd">Intent parameter value (not required):</label>
+            <label for="paramvalueAdd">意图参数值（可选）:</label>
             <input type="text" name="paramvalueAdd" id="paramvalueAdd" /><br />
-            <label for="execAdd">Path to script/program to execute after sending intent (not
-              required):</label>
+            <label for="execAdd">发送意图后要执行的脚本/程序的路径:</label>
             <input type="text" name="execAdd" id="execAdd" /><br />
-            <label for="execAdd">Arguments for script/program (seperated by ,) (not required):</label>
+            <label for="execAdd">程序参数（用逗号分隔）(可选):</label>
             <input type="text" name="execAddArgs" id="execAddArgs" size="50" /><br />
-            <label for="luaAdd">Lua code to run (not required):</label>
+            <label for="luaAdd">运行Lua代码 (可选):</label>
             <textarea id="luaAdd"></textarea>
           </form>
           <div>
-            <button onclick="sendIntentAdd()">Add intent</button>
+            <button onclick="sendIntentAdd()">添加意图</button>
           </div>
           <hr />
         </div>
 
         <h2 id="foldable-edit" onclick="toggleSection('content-edit', 'content-add')">
           <span>+</span>
-          Edit/delete a custom intent
+          编辑/删除自定义意图
         </h2>
         <div class="content" id="content-edit">
           <div id="editSelect"></div>
@@ -108,9 +110,9 @@
           <div id="deleteIntentStatus"></div>
           <div>
             <div>
-              <button onclick="editFormCreate()">Edit selected intent</button>
+              <button onclick="editFormCreate()">编辑选定意图</button>
               <button onclick="deleteSelectedIntent()">
-                Delete selected intent
+                删除选定意图
               </button>
             </div>
           </div>
@@ -120,7 +122,7 @@
       </div>
 
       <div id="section-botauth" style="display: none">
-        <h2>Authentication</h2>
+        <h2>机器人身份验证</h2>
         <hr class="small-hr">
         <div>
           <div id="disconnectButton"></div>
@@ -130,43 +132,41 @@
         </div>
         <hr />
         <div>
-          <h3>Configure an OSKR/dev-unlocked robot</h3>
+          <h3>设置OSKR/dev机器人</h3>
           <hr class="small-hr">
-          <small class="desc">Works with firmware 1.4 and above.</small>
+          <small class="desc">固件版本需在1.4及以上</small>
           <div id="oskrSetupProgress"></div>
           <div id="oskrSetup">
-            <p><b>If you have an OSKR/dev-unlocked bot;</b> enter the bot's IP
-              address and upload the bot's SSH key here, then click "Set up
-              bot". After that, use the above section to finish setting up
-              your bot.</p>
+            <small>如果您有一个OSKR/dev已解锁的机器人；在此输入机器人的IP地址并上传机器人的SSH密钥，然后点击“设置机器人”。然后，请使用上述说明继续设置。如果您有一个生产机器人，请不要这样做</small></br>
+              <br />
             <hr class="small-hr">
-            <input class="tinput" type="text" id="sshIp" name="sshIp" placeholder="Bot IP address" /><br />
+            <input class="tinput" type="text" id="sshIp" name="sshIp" placeholder="机器人IP地址" /><br />
             <input type="file" id="sshKeyFile" name="sshKeyFile" /><br />
             <hr class="small-hr">
-            <button onclick="doSSHSetup()">Set up bot</button>
+            <button onclick="doSSHSetup()">设置机器人</button>
           </div>
         </div>
         <hr />
       </div>
 
       <div id="section-log" style="display: none">
-        <h2>Log</h2>
+        <h2>日志</h2>
         <hr class="small-hr">
         <div class="center">
           <div style="text-align:left">
             <input id="logdebug" name="logdebug" type="checkbox" />
-            <label class="checkbox-label" for="logdebug">Show all logs</label><br />
+            <label class="checkbox-label" for="logdebug">显示所有日志</label><br />
             <input id="logscrollbottom" name="logscrollbottom" type="checkbox" />
-            <label class="checkbox-label" for="logscrollbottom">Scroll to bottom</label>
+            <label class="checkbox-label" for="logscrollbottom">滚动到底部</label>
           </div>
         </div>
         <textarea id="botTranscriptedTextArea" rows="7" cols="50">
-          loading log...
+          加载日志中...
         </textarea>
         <hr class="log-hr" />
       </div>
 
-      <div id="section-version" style="display: none">
+      <!-- <div id="section-version" style="display: none">
         <h2>Version</h2>
         <hr class="small-hr">
         <div id="versionDiv">
@@ -181,26 +181,26 @@
             href="https://github.com/kercre123/wire-pod/wiki/Things-to-Know#updating-wire-pod">Update Guide</a>
         </div>
         <hr />
-      </div>
+      </div> -->
 
       <div id="section-uicustomizer" style="display: none">
-        <h2>UI Customizer</h2>
+        <h2>UI 切换</h2>
         <hr class="small-hr">
-        <p>Accent Color</p>
+        <p>主题色</p>
         <select onchange="setUIColor()" id="accent-color-choose">
-          <option value="teal" selected="selected">Teal (default)</option>
-          <option value="orange">Orange</option>
-          <option value="yellow">Yellow</option>
-          <option value="lime">Lime</option>
-          <option value="sapphire">Sapphire</option>
-          <option value="purple">Purple</option>
-          <option value="green">Green</option>
+          <option value="teal" selected="selected">青绿（默认）</option>
+          <option value="orange">橙色</option>
+          <option value="yellow">黄色</option>
+          <option value="lime">青柠</option>
+          <option value="sapphire">蓝宝石</option>
+          <option value="purple">紫色</option>
+          <option value="green">绿色</option>
         </select>
         <hr class="small-hr">
-        <p>Body Font</p>
+        <p>正文字体</p>
         <select onchange="setUIFont()" id="body-font-choose">
-          <option style="font-family: 'DroidSans';" value="droidsans" selected="selected">Droid Sans (default)</option>
-          <option style="font-family: 'IBMVGA';" value="ibmvga">IBM VGA 8x16 (retro)</option>
+          <option style="font-family: 'DroidSans';" value="droidsans" selected="selected">Droid Sans（默认）</option>
+          <option style="font-family: 'IBMVGA';" value="ibmvga">IBM VGA 8x16 (复古)</option>
         </select>
         <hr />
       </div>

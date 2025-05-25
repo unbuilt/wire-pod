@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Vector Web App</title>
+  <title>Vector网络应用</title>
   <!-- Meta Apple tags for a PWA like experience. -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -19,69 +19,79 @@
 
   <div id="outer">
     <div id="content" class="">
-      <h1 class="center">Vector Configuration</h1>
+      <h1 class="center">Vector配置</h1>
       <div id="botStats"></div>
       <hr>
       <div class="main-nav-parent">
-        <div class="main-nav-child"><a href="/sdkapp"><i class="fa-solid fa-reply"></i><br />Back</a></div>
+        <div class="main-nav-child"><a href="/sdkapp"><i class="fa-solid fa-reply"></i><br />返回</a></div>
         <div class="main-nav-child"><a href="#" onclick="goToControlPage()"><i
-              class="fa-solid fa-gamepad"></i><br />Control<br /></a></div>
+              class="fa-solid fa-gamepad"></i><br />Vector控制<br />(测试版)</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-volume'); return false;"><i
-              class="fa-solid fa-volume-high" id="icon-volume" name="icon"></i><br />Volume</a></div>
+              class="fa-solid fa-volume-high" id="icon-volume" name="icon"></i><br />音量</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-eyes'); return false;"><i
-              class="fa-solid fa-eye" id="icon-eyes" name="icon"></i><br />Eye Color</a></div>
+              class="fa-solid fa-eye" id="icon-eyes" name="icon"></i><br />眼睛颜色</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-face'); return false;"><i
-              class="fa-solid fa-user" id="icon-face" name="icon"></i><br />Faces</a></div>
+              class="fa-solid fa-user" id="icon-face" name="icon"></i><br />面容管理</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-actions'); return false;"><i
-              class="fa-solid fa-person-running" id="icon-actions" name="icon"></i><br />Actions</a></div>
+              class="fa-solid fa-person-running" id="icon-actions" name="icon"></i><br />快速操作</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-stim'); return false;"><i
-              class="fa-solid fa-face-laugh-beam" id="icon-stim" name="icon"></i><br />Stim</a></div>
+              class="fa-solid fa-face-laugh-beam" id="icon-stim" name="icon"></i><br />激励</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-stats'); return false;"><i
-              class="fa-solid fa-chart-simple" id="icon-stim" name="icon"></i><br />Statistics</a></div>
+              class="fa-solid fa-chart-simple" id="icon-stim" name="icon"></i><br />统计</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-photos'); getPhotos(); return false;"><i
-              class="fa-solid fa-images" id="icon-photos" name="icon"></i><br />Photos</a></div>
+              class="fa-solid fa-images" id="icon-photos" name="icon"></i><br />照片</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-locale'); return false;"><i
-              class="fa-solid fa-earth-americas" id="icon-locale" name="icon"></i><br />Locale</a></div>
+              class="fa-solid fa-earth-americas" id="icon-locale" name="icon"></i><br />语言区域</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-time'); return false;"><i
-              class="fa-solid fa-clock" id="icon-time" name="icon"></i><br />Time</a></div>
+              class="fa-solid fa-clock" id="icon-time" name="icon"></i><br />时间格式</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-temp'); return false;"><i
-              class="fa-solid fa-temperature-half" id="icon-temp" name="icon"></i><br />Units</a></div>
+              class="fa-solid fa-temperature-half" id="icon-temp" name="icon"></i><br />温度单位</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-button'); return false;"><i
-              class="fa-solid fa-circle-dot" id="icon-button" name="icon"></i><br />Button</a></div>
+              class="fa-solid fa-circle-dot" id="icon-button" name="icon"></i><br />按钮操作</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-alexa'); return false;"><i
               class="fa-solid fa-house-signal" id="icon-alexa" name="icon"></i><br />Alexa</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-location'); return false;"><i
-              class="fa-solid fa-location-crosshairs" id="icon-location" name="icon"></i><br />Location</a></div>
+              class="fa-solid fa-location-crosshairs" id="icon-location" name="icon"></i><br />设置位置</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-timezone'); return false;"><i
-              class="fa-solid fa-hourglass" id="icon-timezone" name="icon"></i><br />Time Zone</a></div>
+              class="fa-solid fa-hourglass" id="icon-timezone" name="icon"></i><br />设置时区</a></div>
       </div>
       <hr>
 
+
+      <span class="small-text" style="color: grey; display: flex; justify-content: center;">盒服使用教程请前往<a href="http://vector-day.com.cn/html2/index.html">vector-day.com</a>查询</span><br/>
+
+      <span class="small-text" style="color: grey;">感谢以下爱好者为本地服务器做出的努力！</span><br/>
+      <span class="small-text" style="color: grey;">★中文智能语音:<a href="https://www.douyin.com/user/MS4wLjABAAAA3ubzEVzUMbnPhXL00TdpqkwOMah7iCeeZ2pXQAuF9qE">@旋</a>    ★服务器界面汉化:@黄蜀黍</span><br/>
+
+      <span class="small-text" style="color: grey;">★远程技术服务:<a href="https://www.douyin.com/user/MS4wLjABAAAAOt4pTJMV1z80PwVKWajplvvnoauJMLHa3DxZq0wURMw">@歪特的日常</a>（使用教程：<a href="https://www.douyin.com/user/MS4wLjABAAAAOt4pTJMV1z80PwVKWajplvvnoauJMLHa3DxZq0wURMw">抖音</a>  <a href="https://space.bilibili.com/370417600?plat_id=1&share_from=space&share_medium=iphone&share_plat=ios&share_session_id=64B9030C-E4AA-479C-9B6C-4A93F13BC60C&share_source=WEIXIN&share_tag=s_i&spmid=main.space.0.0&timestamp=1710330707&unique_k=3UgqSEt">哔哩哔哩</a>  <a href="https://www.xiaohongshu.com/user/profile/5dfb37cc0000000001004830?xhsshare=CopyLink&appuid=5dfb37cc0000000001004830&apptime=1710330878">小红书</a>  <a href="https://v.ixigua.com/iFDFj4gD/">西瓜视频</a>  <a href="https://goofish.com/">闲鱼</a>  等搜索@歪特的日常）</span><br/>
+
+
+
       <div id="section-volume" class="toggleable-section" style="display:none;">
-        <h2 class="center">Volume</h2>
+        <h2 class="center">音量</h2>
         <hr class="small-hr">
         <div id="currentVolume" class="center"></div>
         <div style="text-align: left;" class="center">
           <label>
-            <input type="radio" name="vol" id="Mute" value="Mute" onclick="sendForm('/api-sdk/volume?volume=0')">Mute
+            <input type="radio" name="vol" id="Mute" value="Mute" onclick="sendForm('/api-sdk/volume?volume=0')">静音
           </label>
           <label>
-            <input type="radio" name="vol" id="Low" value="Low" onclick="sendForm('/api-sdk/volume?volume=1')">Low
+            <input type="radio" name="vol" id="Low" value="Low" onclick="sendForm('/api-sdk/volume?volume=1')">低
           </label>
           <label>
             <input type="radio" name="vol" id="Medium Low" value="Medium Low"
-              onclick="sendForm('/api-sdk/volume?volume=2')">Medium Low
+              onclick="sendForm('/api-sdk/volume?volume=2')">中低
           </label>
           <label>
             <input type="radio" name="vol" id="Medium" value="Medium"
-              onclick="sendForm('/api-sdk/volume?volume=3')">Medium
+              onclick="sendForm('/api-sdk/volume?volume=3')">中
           </label>
           <label>
             <input type="radio" name="vol" id="Medium High" value="Medium High"
-              onclick="sendForm('/api-sdk/volume?volume=4')">Medium High
+              onclick="sendForm('/api-sdk/volume?volume=4')">中高
           </label>
           <label>
-            <input type="radio" name="vol" id="High" value="High" onclick="sendForm('/api-sdk/volume?volume=5')">High
+            <input type="radio" name="vol" id="High" value="High" onclick="sendForm('/api-sdk/volume?volume=5')">高
           </label>
         </div>
         <br>
@@ -89,98 +99,93 @@
       </div>
 
       <div id="section-eyes" class="toggleable-section" style="display:none;">
-        <h2 style="margin-bottom: 0px;">Eye Color</h2>
+        <h2 style="margin-bottom: 0px;">眼睛颜色</h2>
         <hr class="small-hr">
-        <h4 style="margin-bottom: 0px; margin-top:0px;">Preset Eye Colors:</h4>
+        <h4 style="margin-bottom: 0px; margin-top:0px;">预设眼睛颜色:</h4>
         <div style="text-align: left;" class="center">
           <label>
             <input type="radio" name="eye" id="Teal" value="Teal"
-              onclick="sendForm('/api-sdk/eye_color?color=0')">Teal<br>
+              onclick="sendForm('/api-sdk/eye_color?color=0')">蓝绿色<br>
           </label>
           <label>
             <input type="radio" name="eye" id="Orange" value="Orange"
-              onclick="sendForm('/api-sdk/eye_color?color=1')">Orange<br>
+              onclick="sendForm('/api-sdk/eye_color?color=1')">橙色<br>
           </label>
           <label>
             <input type="radio" name="eye" id="Yellow" value="Yellow"
-              onclick="sendForm('/api-sdk/eye_color?color=2')">Yellow<br>
+              onclick="sendForm('/api-sdk/eye_color?color=2')">黄色<br>
           </label>
           <label>
             <input type="radio" name="eye" id="Lime Green" value="Lime Green"
-              onclick="sendForm('/api-sdk/eye_color?color=3')">Lime Green<br>
+              onclick="sendForm('/api-sdk/eye_color?color=3')">酸橙绿<br>
           </label>
           <label>
             <input type="radio" name="eye" id="Azure Blue" value="Azure Blue"
-              onclick="sendForm('/api-sdk/eye_color?color=4')">Azure Blue<br>
+              onclick="sendForm('/api-sdk/eye_color?color=4')">天蓝<br>
           </label>
           <label>
             <input type="radio" name="eye" id="Purple" value="Purple"
-              onclick="sendForm('/api-sdk/eye_color?color=5')">Purple<br>
+              onclick="sendForm('/api-sdk/eye_color?color=5')">紫色<br>
           </label>
           <label>
             <input type="radio" name="eye" id="Other Green" value="Other Green"
-              onclick="sendForm('/api-sdk/eye_color?color=6')">Other Green<br>
+              onclick="sendForm('/api-sdk/eye_color?color=6')">绿色<br>
           </label>
         </div>
         <br />
         <hr class="small-hr">
-        <h4 style="margin-top: 0px;" class="center">Custom Eye Color:</h4>
+        <h4 style="margin-top: 0px;" class="center">自定义眼睛颜色:</h4>
         <div class="center" id="picker"></div><br />
         <div class="center">
-          <button class="settings" onclick="sendCustomColor()">Submit</button>
+          <button class="settings" onclick="sendCustomColor()">提交</button>
         </div>
         <hr>
       </div>
 
       <div id="section-face" class="toggleable-section" style="display:none;">
-        <h2 class="center">Face Manager</h2>
+        <h2 class="center">面容管理</h2>
         <hr class="small-hr">
-        <h3 class="center">Modify existing faces:</h3>
-        <p class="center">Choose the face you would like to modify.</p>
+        <h3 class="center">修改现有面容:</h3>
+        <p class="center">选择要修改的面孔</p>
         <div class="center">
           <select id="faceList" name="faceList"></select>
         </div>
         <div class="center">
-          <button class="center" onclick="refreshFaceList()">Refresh list</button>
+          <button class="center" onclick="refreshFaceList()">刷新列表</button>
         </div>
         <div class="center">
           <div id="faceButtons">
-            <button onclick="deleteFace()">Delete</button>
-            <button onclick="renameFace()">Rename</button>
+            <button onclick="deleteFace()">删除</button>
+            <button onclick="renameFace()">重命名</button>
           </div>
         </div>
         <hr class="small-hr">
-        <h3 class="center">Add a new face:</h3>
-        <p class="center">Enter a name you'd like to add:</p>
+        <h3 class="center">添加新面容:</h3>
+        <p class="center">输入要添加的名称:</p>
         <div class="center">
           <input class="tinput" id="faceInput" name="faceInput" type="text" placeholder="Put name here">
         </div>
         <div class="center">
-          <button onclick="addFace()">Add Face</button>
+          <button onclick="addFace()">添加面容</button>
         </div>
         <hr>
       </div>
 
       <div id="section-actions" class="toggleable-section" style="display:none;">
-        <h2 class="center">Quick Actions</h2>
+        <h2 class="center">快速操作</h2>
         <hr class="small-hr">
         <div class="center">
-          <button onclick="sendForm('/api-sdk/cloud_intent?intent=explore_start')">Explore
-            Start</button>
-          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_imperative_dance')">Listen for
-            Beat</button>
-          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_system_sleep')">Go to
-            Sleep</button>
-          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_imperative_fetchcube')">Fetch
-            Cube</button>
-          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_system_charger')">Go
-            Home</button>
+          <button onclick="sendForm('/api-sdk/cloud_intent?intent=explore_start')">开始探索</button>
+          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_imperative_dance')">检测节奏</button>
+          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_system_sleep')">进入休眠</button>
+          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_imperative_fetchcube')">拾取方块</button>
+          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_system_charger')">返回充电座</button>
         </div>
         <hr>
       </div>
 
       <div id="section-stim" class="toggleable-section" style="display:none;">
-        <h2 class="center">Stimulation</h2>
+        <h2 class="center">激励</h2>
         <hr class="small-hr">
         <div class="center">
           <canvas id="stimChart"></canvas>
@@ -189,18 +194,18 @@
       </div>
 
       <div id="section-stats" class="toggleable-section" style="display:none;">
-        <h2 class="center">Statistics</h2>
+        <h2 class="center">统计</h2>
         <hr class="small-hr">
-        <button onclick="updateStats()">Refresh</button><br>
+        <button onclick="updateStats()">刷新</button><br>
         <div id="statsSection"></div>
         <hr>
       </div>
 
       <div id="section-photos" class="toggleable-section" style="display:none;">
-        <h2 class="center">Photos</h2>
+        <h2 class="center">照片</h2>
         <hr class="small-hr">
         <div class="center">
-          <button onclick="getPhotos()">Refresh List</button>
+          <button onclick="getPhotos()">刷新列表</button>
         </div>
         <div class="center">
           <div id="photoSection"></div>
@@ -209,33 +214,33 @@
       </div>
 
       <div id="section-locale" class="toggleable-section" style="display:none;">
-        <h2 class="center">Locale</h2>
+        <h2 class="center">语言区域</h2>
         <hr class="small-hr">
         <div id="currentLocale" class="center"></div>
         <div style="text-align: left;" class="center">
           <label>
             <input type="radio" name="locale" id="en-US" value="English (US)"
-              onclick="sendForm('/api-sdk/locale?locale=en-US')">English (US)<br>
+              onclick="sendForm('/api-sdk/locale?locale=en-US')">美式英语<br>
           </label>
           <label>
             <input type="radio" name="locale" id="en-GB" value="English (GB)"
-              onclick="sendForm('/api-sdk/locale?locale=en-GB')">English (GB)<br>
+              onclick="sendForm('/api-sdk/locale?locale=en-GB')">英式英语<br>
           </label>
           <label>
             <input type="radio" name="locale" id="en-AU" value="English (AU)"
-              onclick="sendForm('/api-sdk/locale?locale=en-AU')">English (AU)<br>
+              onclick="sendForm('/api-sdk/locale?locale=en-AU')">澳大利亚英语<br>
           </label>
           <label>
             <input type="radio" name="locale" id="de-DE" value="German"
-              onclick="sendForm('/api-sdk/locale?locale=de-DE')">German<br>
+              onclick="sendForm('/api-sdk/locale?locale=de-DE')">德语<br>
           </label>
           <label>
             <input type="radio" name="locale" id="fr-FR" value="French"
-              onclick="sendForm('/api-sdk/locale?locale=fr-FR')">French<br>
+              onclick="sendForm('/api-sdk/locale?locale=fr-FR')">法语<br>
           </label>
           <label>
             <input type="radio" name="locale" id="ja-FP" value="Japanese"
-              onclick="sendForm('/api-sdk/locale?locale=ja-JP')">Japanese<br>
+              onclick="sendForm('/api-sdk/locale?locale=ja-JP')">日语<br>
           </label>
         </div>
         <br>
@@ -243,17 +248,17 @@
       </div>
 
       <div id="section-time" class="toggleable-section" style="display:none;">
-        <h2 class="center">Time Format</h2>
+        <h2 class="center">时间格式</h2>
         <hr class="small-hr">
         <div id="currentTimeSet" class="center"></div>
         <div style="text-align: left;" class="center">
           <label>
             <input type="radio" name="time" id="12 Hour" value="12 Hour"
-              onclick="sendForm('/api-sdk/time_format_12')">12 Hour<br>
+              onclick="sendForm('/api-sdk/time_format_12')">12 小时制<br>
           </label>
           <label>
             <input type="radio" name="time" id="24 Hour" value="24 Hour"
-              onclick="sendForm('/api-sdk/time_format_24')">24 Hour<br>
+              onclick="sendForm('/api-sdk/time_format_24')">24 小时制<br>
           </label>
         </div>
         <br>
@@ -261,17 +266,17 @@
       </div>
 
       <div id="section-temp" class="toggleable-section" style="display:none;">
-        <h2 class="center">Temp Format</h2>
+        <h2 class="center">温度单位</h2>
         <hr class="small-hr">
         <div id="currentTempFormat" class="center"></div>
         <div style="text-align: left;" class="center">
           <label>
             <input type="radio" name="temp" id="Celsius" value="Celsius"
-              onclick="sendForm('/api-sdk/temp_c')">Celsius<br>
+              onclick="sendForm('/api-sdk/temp_c')">摄氏度<br>
           </label>
           <label>
             <input type="radio" name="temp" id="Fahrenheit" value="Fahrenheit"
-              onclick="sendForm('/api-sdk/temp_f')">Fahrenheit<br>
+              onclick="sendForm('/api-sdk/temp_f')">华氏度<br>
           </label>
         </div>
         <br>
@@ -279,7 +284,7 @@
       </div>
 
       <div id="section-button" class="toggleable-section" style="display:none;">
-        <h2 class="center">Button Action</h2>
+        <h2 class="center">按钮动作</h2>
         <hr class="small-hr">
         <div id="currentButton" class="center"></div>
         <div style="text-align: left;" class="center">
@@ -311,20 +316,20 @@
       </div>
 
       <div id="section-location" class="toggleable-section" style="display:none;">
-        <h2 class="center">Set Location</h2>
+        <h2 class="center">设置位置</h2>
         <hr class="small-hr">
         <div id="currentLocation"></div>
-        <small class="desc">Example: San Francisco, California</small>
+        <small class="desc">北京示例：Beijing（推荐）   河北廊坊示例：Langfang,Hebei</small>
         <div class="center">
           <input class="tinput" id="locationInput" name="locationInput" type="text" placeholder="Put location here">
         </div>
         <hr class="small-hr">
-        <button onclick="sendLocation()">Submit Location</button>
+        <button onclick="sendLocation()">提交位置</button>
         <hr>
       </div>
 
       <div id="section-timezone" class="toggleable-section" style="display:none;">
-        <h2 style="margin-bottom:0px;">Set Time Zone</h2>
+        <h2 style="margin-bottom:0px;">设置时区</h2>
         <hr class="small-hr">
         <div id="currentTimeZone" class="center"></div>
         <div class="center">
@@ -376,7 +381,7 @@
         </div>
         <br />
         <hr class="small-hr">
-        <button onclick="sendTimeZone()">Submit Time Zone</button>
+        <button onclick="sendTimeZone()">提交时区</button>
         <hr>
       </div>
 
