@@ -254,7 +254,8 @@ function checkKG() {
     "llmCommandInput",
     "openAIVoiceForEnglishInput",
     "sparkInput",
-    "plainAIInput"
+    "plainAIInput",
+    "zhiXInput"
   ];
 
   elements.forEach((el) => (getE(el).style.display = "none"));
@@ -278,12 +279,14 @@ function checkKG() {
       getE("customAIInput").style.display = "block";
       getE("saveChatInput").style.display = "block";
       getE("llmCommandInput").style.display = "block";
-    }else if (provider == "spark") {
+    }else if (provider === "spark") {
       getE("sparkInput").style.display = "block";
     }
-    else if (provider == "plainai") {
+    else if (provider === "plainai") {
       getE("plainAIInput").style.display = "block";
-    } 
+    } else if (provider === "zhix") {
+      getE("zhiXInput").style.display = "block";
+    }
   }
 }
 
@@ -349,7 +352,11 @@ function sendKGAPIKey() {
   }else if (provider === "plainai") {
     data.key = getE("plainAIKey").value;
 
-  } else {
+  }else if( provider === "zhix") {  
+    data.key = getE("zhiXKey").value;
+    data.endpoint = getE("zhiXEndpoint").value ??'';
+   }
+   else {
     data.enable = false;
   }
 
@@ -426,7 +433,10 @@ function updateKGAPI() {
         }
       }  else if (data.provider === "plainai") {
         getE("plainAIKey").value = data.key;
-      }
+      }else if (data.provider === "zhix") {
+        getE("zhiXKey").value = data.key;
+        getE("zhiXEndpoint").value = data.endpoint;
+       }
       checkKG();
     });
 }

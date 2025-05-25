@@ -82,6 +82,7 @@
             <select name="kgProvider" id="kgProvider" form="kgAPIAddForm" onchange="checkKG()">
               <option value="" selected>None</option>
               <option value="plainai">PlainAI</option>
+              <option value="zhix">ZhiX</option>
               <option value="spark">Spark</option>
               <option value="openai">OpenAI</option>
               <option value="houndify">Houndify</option>
@@ -195,24 +196,31 @@
               <br />
             </span> 
             <span id="plainAIInput" style="display: none">
-                <br />
-                <label for="plainAIKey">PlainAI Key:</label>
-                <input type="text" name="plainAIKey" id="plainAIKey" /><br />
-                <label for="plainAIPrompt"
-                  >LLM Prompt (leave blank for default):</label
-                ><br />
-                <small
-                  ><label for="plainAIPrompt"
-                    >(default: "You are a helpful, animated robot called Vector.
-                    Keep the response concise yet informative.")</label
-                  ></small
-                >
-                <input
-                  type="text"
-                  name="plainAIPrompt"
-                  id="plainAIPrompt"
-                /><br />
-              </span>      
+              <br />
+              <label for="plainAIKey">PlainAI Key:</label>
+              <input type="text" name="plainAIKey" id="plainAIKey" /><br />
+              <label for="plainAIPrompt"
+                >LLM Prompt (leave blank for default):</label
+              ><br />
+              <small
+                ><label for="plainAIPrompt"
+                  >(default: "You are a helpful, animated robot called Vector.
+                  Keep the response concise yet informative.")</label
+                ></small
+              >
+              <input
+                type="text"
+                name="plainAIPrompt"
+                id="plainAIPrompt"
+              /><br />
+            </span>
+            <span id="zhiXInput" style="display: none">
+              <br />
+              <label for="zhiXKey"><div>ZhiX Key:</div></label>
+              <input type="text" name="zhiXKey" id="zhiXKey" /><br />
+              <label for="zhiXEndpoint">ZhiX Endpoint <small>(optional)</small> :</label>
+            <input type="text" name="zhiXEndpoint" id="zhiXEndpoint" /><br />
+            </span>      
 
             <div style="text-align: left;">
               <span id="intentGraphInput" style="display: none;">
