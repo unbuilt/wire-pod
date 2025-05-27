@@ -126,7 +126,7 @@ func (s *Server) ProcessIntentGraph(req *vtt.IntentGraphRequest) (*vtt.IntentGra
 				ttr.IntentPass(req, "intent_imperative_praise", transcribedText, map[string]string{"": ""}, false)
 				return nil, nil
 			}
-		} else if vars.APIConfig.Knowledge.Provider != "plainaiv2" {
+		} else if vars.APIConfig.Knowledge.Provider == "zhix" {
 			logger.Println("PlainAI-2")
 			// Enter into KG
 			ttr.IntentPass(req, "intent_knowledge_promptquestion", transcribedText, map[string]string{"": ""}, false)
