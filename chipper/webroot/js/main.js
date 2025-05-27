@@ -657,7 +657,6 @@ function showKG() {
 }
 
 function toggleVisibility(sections, sectionToShow, iconId) {
-  console.log(sections, sectionToShow, iconId, 'jjjjjj');
   if (sectionToShow != "section-log") {
     GetLog = false;
   }

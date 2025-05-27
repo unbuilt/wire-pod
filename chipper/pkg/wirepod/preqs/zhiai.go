@@ -2,6 +2,7 @@ package processreqs
 
 import (
 	"encoding/json"
+	"encoding/base64"	
 	"fmt"
 	"os"
 	"time"
@@ -77,11 +78,25 @@ func (x *XConversation) connect(deviceId string) (string, error) {
 
 	// Set headers for the WebSocket connection
 	headers := http.Header{}
-	headers.Set("Content-Type", "application/json")
-	headers.Set("Device-ID", apiKey)
-	headers.Set("Client-ID", "test-client-id")
-	headers.Set("Protocol-Version", "1")
-	headers.Set("Authorization", "Bearer " + "test-token")
+
+	victorai := true
+	victorDeviceId := "victor" + deviceId
+
+	println("Victor Device ID:", victorDeviceId)
+	println("Victor API Key:", apiKey)
+
+	if victorai {
+		headers.Set("Device-Id", victorDeviceId)
+		headers.Set("Client-Id", victorDeviceId)
+		headers.Set("Protocol-Version", "1")
+		headers.Set("Authorization", "Bearer 222")
+	} else {
+		headers.Set("Content-Type", "application/json")
+		headers.Set("Device-ID", apiKey)
+		headers.Set("Client-ID", "test-client-id")
+		headers.Set("Protocol-Version", "1")
+		headers.Set("Authorization", "Bearer " + "test-token")
+	}
 
 	// Connect to the WebSocket server
 	conn, _, err := dialer.Dial(host, headers)
@@ -231,7 +246,16 @@ func (x *XConversation) RunTurn(req sr.SpeechRequest) (string, error) {
 			finalOpusData := opusData[:n]
 
 			// Send the audio data to the server
-			err = conn.WriteMessage(websocket.BinaryMessage, finalOpusData)
+			if true {
+				audioMessage := map[string]interface{}{
+					"session_id": sessionID,
+					"type":       "audio",
+					"audio":      base64.StdEncoding.EncodeToString(chunk),
+				}
+				err = conn.WriteJSON(audioMessage)
+			} else {
+				err = conn.WriteMessage(websocket.BinaryMessage, finalOpusData)
+			}
 			if err != nil {
 				logger.Println("Write error:", err)
 				break
@@ -405,8 +429,28 @@ func (x *XConversation) RunTurn(req sr.SpeechRequest) (string, error) {
 		//logger.Println("Response state:", response["state"])
 		//logger.Println("Response session_id:", response["session_id"])
 		//logger.Println("Response text:", response["text"])
-		
-		if response["type"] == "tts" {
+		if response["type"] == "audio" {
+			logger.Println("Received audio data")
+			audioData, _ := base64.StdEncoding.DecodeString(response["audio"].( string))
+
+			if speaking {
+				// Append the raw audio data to the queue by chunk of 960
+				start := 0
+				chunkLen := 960
+				for start < len(audioData) {
+					if start+chunkLen > len(audioData) {
+						chunkLen = len(audioData) - start
+					}
+					qq = append(qq, audioData[start:start+chunkLen])
+					start += chunkLen
+				}
+
+				should_exit = false
+			}
+
+			continue
+
+		} else if response["type"] == "tts" {
 			if response["state"] == "sentence_start" {
 				logger.Println("Received sentence start")
 				audioFilename = response["session_id"].(string) + ".wav"
