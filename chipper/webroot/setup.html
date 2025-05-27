@@ -87,19 +87,11 @@
           <form id="kgAPIAddForm">
             <label for="kgProvider">知识库 API 提供商:</label>
             <select name="kgProvider" id="kgProvider" form="kgAPIAddForm" onchange="checkKG()">
-<<<<<<< HEAD
               <option value="" selected>无</option>
               <option value="plainai">智简AI</option>
               <option value="zhix">智简Pro</option>
               <option value="spark">讯飞星火</option>
               <option value="openai">OpenAI GPT</option>
-=======
-              <option value="" selected>None</option>
-              <option value="plainai">PlainAI</option>
-              <option value="zhix">ZhiX</option>
-              <option value="spark">Spark</option>
-              <option value="openai">OpenAI</option>
->>>>>>> xzhi
               <option value="houndify">Houndify</option>
               <option value="together">Together</option>
               <option value="custom">Custom</option>
@@ -172,15 +164,9 @@
             </span>
             <span id="sparkInput" style="display: none">
               <br />
-<<<<<<< HEAD
               <p>
                 选择讯飞星火API版本：请前往<a href="https://www.xfyun.cn/">讯飞开放平台</a>注册账号，使用教程请前往<a href="http://vector-day.com.cn/html2/index.html">vector-day.com</a>查询
               </p> 
-=======
-              <label>
-                Select Spark LLM API Version
-              </label> 
->>>>>>> xzhi
               <br />
              
               <label for="apilite">&nbsp;&nbsp;&nbsp;&nbsp;Lite</label>
@@ -200,11 +186,7 @@
               <label for="appKey"><div>appKey:</div></label>
               <input type="text" name="appKey" id="appKey" /><br />         
 
-<<<<<<< HEAD
               <!-- <label for="sparkPrompt"
-=======
-              <label for="sparkPrompt"
->>>>>>> xzhi
                 >Spark Prompt (leave blank for default):</label
               ><br />
               <small
@@ -217,16 +199,11 @@
                 type="text"
                 name="sparkPrompt"
                 id="sparkPrompt"
-<<<<<<< HEAD
               /><br /> -->
-=======
-              /><br />
->>>>>>> xzhi
               <br />
             </span> 
             <span id="plainAIInput" style="display: none">
               <br />
-<<<<<<< HEAD
 
               <p>
                 由<a href="https://www.douyin.com/user/MS4wLjABAAAA3ubzEVzUMbnPhXL00TdpqkwOMah7iCeeZ2pXQAuF9qE">@旋</a>为Vector定制的在线服务，支持对话及图像。请联系<a href="https://www.douyin.com/user/MS4wLjABAAAA3ubzEVzUMbnPhXL00TdpqkwOMah7iCeeZ2pXQAuF9qE">@旋</a>或者<a href="https://www.douyin.com/user/MS4wLjABAAAAOt4pTJMV1z80PwVKWajplvvnoauJMLHa3DxZq0wURMw">@歪特的日常</a>获取智简AI的Key密钥。
@@ -247,30 +224,6 @@
               <label for="zhiXKey"><div>智简Pro Key:</div></label>
               <input type="text" name="zhiXKey" id="zhiXKey" /><br />
               <label for="zhiXEndpoint">智简Pro 端节点 <small>(可选)</small> :</label>
-=======
-              <label for="plainAIKey">PlainAI Key:</label>
-              <input type="text" name="plainAIKey" id="plainAIKey" /><br />
-              <label for="plainAIPrompt"
-                >LLM Prompt (leave blank for default):</label
-              ><br />
-              <small
-                ><label for="plainAIPrompt"
-                  >(default: "You are a helpful, animated robot called Vector.
-                  Keep the response concise yet informative.")</label
-                ></small
-              >
-              <input
-                type="text"
-                name="plainAIPrompt"
-                id="plainAIPrompt"
-              /><br />
-            </span>
-            <span id="zhiXInput" style="display: none">
-              <br />
-              <label for="zhiXKey"><div>ZhiX Key:</div></label>
-              <input type="text" name="zhiXKey" id="zhiXKey" /><br />
-              <label for="zhiXEndpoint">ZhiX Endpoint <small>(optional)</small> :</label>
->>>>>>> xzhi
             <input type="text" name="zhiXEndpoint" id="zhiXEndpoint" /><br />
             </span>      
 
@@ -329,7 +282,7 @@
       </div>
 
       <div id="section-language" style="display: none">
-        <h2>选择口令的语言种类</h2></div>
+        <h2>选择口令的语言种类</h2>
         <br />
         <div id="languageStatus"></div>
         <div id="languageSelectionDiv">
