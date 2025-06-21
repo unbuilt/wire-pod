@@ -60,6 +60,7 @@ type XConversation struct {
 	UserName string
 	conn	*websocket.Conn
 	sessionID string
+	serverType string
 }
 
 func (x *XConversation) connect(deviceId string) (string, error) {
@@ -79,17 +80,22 @@ func (x *XConversation) connect(deviceId string) (string, error) {
 	// Set headers for the WebSocket connection
 	headers := http.Header{}
 
-	victorai := true
+	x.serverType = "plainai"
+	if apiKey.startsWith("XZ") {
+		x.serverType = "xiaozhi"
+		apiKey = apiKey[2:]
+	}
+
 	victorDeviceId := "victor" + deviceId
 
 	println("Victor Device ID:", victorDeviceId)
 	println("Victor API Key:", apiKey)
 
-	if victorai {
+	if x.serverType != "xiaozhi" {
 		headers.Set("Device-Id", victorDeviceId)
 		headers.Set("Client-Id", victorDeviceId)
 		headers.Set("Protocol-Version", "1")
-		headers.Set("Authorization", "Bearer 222")
+		headers.Set("Authorization", "Bearer " + apiKey)
 	} else {
 		headers.Set("Content-Type", "application/json")
 		headers.Set("Device-ID", apiKey)
@@ -194,6 +200,7 @@ func (x *XConversation) RunTurn(req sr.SpeechRequest) (string, error) {
 	}
 
 	saveAudio := false
+	abort := false
 	
 	// Send the audio data to the server
 	// Keep sending audio data in parallel
@@ -208,6 +215,7 @@ func (x *XConversation) RunTurn(req sr.SpeechRequest) (string, error) {
 				errcount++
 				if errcount > 3 {
 					logger.Println("Too many errors, breaking out of loop")
+					abort = true
 					break
 				} else {
 					time.Sleep(30 * time.Millisecond)
@@ -246,7 +254,7 @@ func (x *XConversation) RunTurn(req sr.SpeechRequest) (string, error) {
 			finalOpusData := opusData[:n]
 
 			// Send the audio data to the server
-			if true {
+			if x.serverType != "xiaozhi" {
 				audioMessage := map[string]interface{}{
 					"session_id": sessionID,
 					"type":       "audio",
@@ -270,19 +278,24 @@ func (x *XConversation) RunTurn(req sr.SpeechRequest) (string, error) {
 			time.Sleep(50 * time.Millisecond)
 		}
 
-		// Send listen/stop message
-		// {"session_id":"a9b643ab-6107-4854-bfaf-fef5e734c4bd","type":"listen","state":"stop"}
-		listenStopMessage := map[string]interface{}{
-			"session_id": sessionID,
-			"type":       "listen",
-			"state":      "stop",
+		if (!abort) {
+			// Send listen/stop message
+			// {"session_id":"a9b643ab-6107-4854-bfaf-fef5e734c4bd","type":"listen","state":"stop"}
+			listenStopMessage := map[string]interface{}{
+				"session_id": sessionID,
+				"type":       "listen",
+				"state":      "stop",
+			}
+			err = conn.WriteJSON(listenStopMessage)
+			if err != nil {
+				logger.Println("Write error:", err)
+				return
+			}
+			logger.Println("Sent listen/stop message to server")
+		} else {
+			logger.Println("Aborting conversation, not sending listen/stop message")
+			conn.Close()
 		}
-		err = conn.WriteJSON(listenStopMessage)
-		if err != nil {
-			logger.Println("Write error:", err)
-			return
-		}
-		logger.Println("Sent listen/stop message to server")
 	}()
 
 	audioFilename := "audio" + sessionID + ".wav"
